@@ -15,10 +15,10 @@ class CreateBookingsTable extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('room_id')->unsigned();
+            $table->bigInteger('room_id')->unsigned();
             $table->dateTime('date_start');
             $table->dateTime('date_end');
-            $table->integer('customer_id')->unsigned();
+            $table->bigInteger('customer_id')->unsigned();
             $table->timestamps();
 
             $table->foreign('room_id')->references('id')->on('rooms');
