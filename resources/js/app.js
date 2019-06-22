@@ -4,10 +4,11 @@
  * application frontend using useful Laravel and JavaScript libraries.
  */
 
-// require('./bootstrap');
+require('./bootstrap');
 
 import Vue from 'vue';
 import bootstrap from 'bootstrap';
+import Toastr from 'vue-toastr';
 import '@/sass/app.scss';
 
 //Route information for Vue Router
@@ -16,7 +17,7 @@ import Routes from '@/js/routes.js';
 //components file
 import App from '@/js/views/App';
 
-// Vue.use(bootstrap);
+Vue.use(Toastr, { /* options */ });
 
 const app = new Vue({
     el: '#app',

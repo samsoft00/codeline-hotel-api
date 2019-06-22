@@ -37,14 +37,14 @@ class AuthController extends ApiBaseController
     public function login(Request $request){
 
         $request->validate([
-            'email' => ['required', 'string', 'email', 'max:255'],
-            'password' => ['required']
+            'email'     => ['required', 'string', 'email', 'max:255'],
+            'password'  => ['required']
         ]);
 
         $credentials = request(['email', 'password']);
 
         if(!Auth::attempt($credentials) ){
-            return $this->setStatusCode(401)->respond(['message' => 'Unauthorized']);
+            return $this->setStatusCode(401)->respond(['message' => 'Incorrect login credentials']);
         }
 
         $user = $request->user();
