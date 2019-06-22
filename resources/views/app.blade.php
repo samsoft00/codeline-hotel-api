@@ -9,7 +9,6 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-        <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     </head>
     <body>

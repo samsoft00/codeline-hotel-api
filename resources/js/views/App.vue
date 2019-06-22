@@ -1,36 +1,24 @@
 <template>
-    <v-app>
-        <div>
-        <b-navbar toggleable="lg" type="dark" variant="info">
-            <b-container>
-            <b-navbar-brand href="#">Codeline Hotel</b-navbar-brand>
 
-            <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+    <div>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">Codeline Hotel</a>
 
-            <b-collapse id="nav-collapse" is-nav>
 
-            <!-- Right aligned nav items -->
-            <b-navbar-nav class="ml-auto">
-            
-                <b-nav-item-dropdown right>
-                    <!-- Using 'button-content' slot -->
-                    <template slot="button-content"><em>User</em></template>
-                    <b-dropdown-item tag="li" to="/">Home</b-dropdown-item>
-                    <b-dropdown-item tag="li" to="/login">Sign Out</b-dropdown-item>
-                </b-nav-item-dropdown>
-
-            </b-navbar-nav>
-
-            </b-collapse>
-            </b-container>
-        </b-navbar>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto"></ul>
+                <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>       
+        </div>
+        </nav>
         
-        <!-- The most important thing here -->
-        <router-view></router-view>        
-        
-        </div>            
+        <router-view></router-view>
+    </div>
 
-    </v-app>
 </template>
 
 <style scoped>
