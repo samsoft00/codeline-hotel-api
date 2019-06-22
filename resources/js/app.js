@@ -5,3 +5,22 @@
  */
 
 require('./bootstrap');
+
+import Vue from 'vue';
+import Vuetify from 'vuetify';
+
+//Route information for Vue Router
+import Routes from '@/js/routes.js';
+
+//components file
+import App from '@/js/views/App';
+
+Vue.use(Vuetify);
+
+const app = new Vue({
+    el: '#app',
+    router: Routes,
+    render: s => s(App)
+});
+
+export default app;
