@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRoomCapacitiesTable extends Migration
+class CreateRoomTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateRoomCapacitiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('room_capacity', function (Blueprint $table) {
+        Schema::create('room_type', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');//e.g. Single, Double, Family
-            $table->timestamps();
+            $table->string('type');//e.g. Deluxe, Standard
+            // $table->timestamps();
         });
     }
 
@@ -27,6 +27,6 @@ class CreateRoomCapacitiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('room_capacities');
+        Schema::dropIfExists('room_types');
     }
 }
