@@ -5,6 +5,7 @@ import Home from '@/js/components/Home';
 import Auth from '@/js/components/Auth';
 
 Vue.use(VueRouter);
+//meta: { requiresAuth: true }
 
 const router = new VueRouter({
     mode: 'history',
@@ -24,8 +25,8 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
     if(to.meta.requiresAuth){
-        const authUser = JSON.parse(window.localStorage.getItem('authUser'));
-        if(authUser && authUser.access_token){
+        const user = JSON.parse(window.localStorage.getItem('user'));
+        if(user && user.access_token){
             next();
         }else{
             next({name: 'home'})
