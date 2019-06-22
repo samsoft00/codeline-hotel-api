@@ -15,7 +15,7 @@ class HotelsController extends ApiBaseController
      */
     public function index()
     {
-        $hotel = Hotel::with(['rooms.capacity', 'rooms.type'])->get();
+        $hotel = Hotel::with(['rooms.capacity', 'rooms.type'])->simplePaginate(10);
         return $this->respond($hotel);
     }
 
