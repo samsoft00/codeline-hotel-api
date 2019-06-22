@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Hotel;
 
-class HotelsController extends Controller
+class HotelsController extends ApiBaseController
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +15,8 @@ class HotelsController extends Controller
      */
     public function index()
     {
-        //
+        $hotel = Hotel::with(['rooms.capacity', 'rooms.type'])->get();
+        return $this->respond($hotel);
     }
 
     /**
@@ -46,7 +48,11 @@ class HotelsController extends Controller
      */
     public function show($id)
     {
-        //
+        $hotel = Hotel::find($id)->with(['rooms.capacity', 'rooms.type'])->first();
+        if(!$hotel){
+            return $this->setStatusCode(404)->respond('Resource not found!');
+        }
+        return $this->respond($hotel);
     }
 
     /**

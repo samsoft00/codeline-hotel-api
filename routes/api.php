@@ -32,4 +32,13 @@ Route::group([
     });
 });
 
+Route::group([
+    'namespace'     =>  'Api',
+    'middleware'    =>  'api',
+    'prefix'        =>  'hotels'
+], function(){
+    Route::get('', 'HotelsController@index');
+    Route::get('{id}', 'HotelsController@show');
+});
+
 
