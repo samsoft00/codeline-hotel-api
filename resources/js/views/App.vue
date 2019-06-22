@@ -3,15 +3,12 @@
     <div>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-            <a class="navbar-brand" href="#">Codeline Hotel</a>
+            <router-link to="/" tag="a" class="navbar-brand">Codeline Hotel</router-link>
 
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto"></ul>
-                <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
+                <router-link class="btn btn-outline-danger my-2 my-sm-0" to="/auth" tag="button">Login/Register</router-link>
             </div>       
         </div>
         </nav>
