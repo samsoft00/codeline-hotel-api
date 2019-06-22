@@ -55,17 +55,18 @@
                     scope: ''
                 }
                 console.table(data);
+                
                 const user = {}
-                this.axios.post('/oauth/token', data)
+                axios.post('/oauth/token', data)
                      .then(payload => {
                          if(payload.status === 200){
                              user.access_token = payload.data.access_token;
-                             user.refresh_token = response.data.refresh_token;
+                             user.refresh_token = payload.data.refresh_token;
                              window.localStorage.setItem('user', JSON.stringify(user));
                              this.$router.push({name: 'home'});//temporary
                          }
                      })
-                     .catch(error => console.log(error.response.data.error_description));
+                     .catch(error => this.$toastr.e(error.response.data.error_description));
             }
         }
     }

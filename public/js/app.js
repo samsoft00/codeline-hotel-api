@@ -1897,10 +1897,10 @@ __webpack_require__.r(__webpack_exports__);
       };
       console.table(data);
       var user = {};
-      this.axios.post('/oauth/token', data).then(function (payload) {
+      axios.post('/oauth/token', data).then(function (payload) {
         if (payload.status === 200) {
           user.access_token = payload.data.access_token;
-          user.refresh_token = response.data.refresh_token;
+          user.refresh_token = payload.data.refresh_token;
           window.localStorage.setItem('user', JSON.stringify(user));
 
           _this.$router.push({
@@ -1909,7 +1909,7 @@ __webpack_require__.r(__webpack_exports__);
 
         }
       })["catch"](function (error) {
-        return console.log(error.response.data.error_description);
+        return _this.$toastr.e(error.response.data.error_description);
       });
     }
   }
