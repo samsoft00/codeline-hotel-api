@@ -1977,22 +1977,46 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      hotels: []
+      hotels: [],
+      roomType: []
     };
   },
-  methods: {},
-  mounted: function mounted() {
-    var _this = this;
+  methods: {
+    fetchHotels: function fetchHotels() {
+      var _this = this;
 
-    axios.get('/api/hotels').then(function (response) {
-      console.log(response.data);
-      _this.hotels = response.data;
-    })["catch"](function (error) {
-      return console.log(error);
-    });
+      axios.get('/api/hotels').then(function (response) {
+        //  console.log(response.data);
+        _this.hotels = response.data;
+      })["catch"](function (error) {
+        return console.log(error);
+      });
+    },
+    fetchRoomType: function fetchRoomType() {
+      var _this2 = this;
+
+      axios.get('/api/room-type').then(function (response) {
+        return response.data;
+      }).then(function (res) {
+        console.log(res);
+        _this2.roomType = res;
+      })["catch"](function (error) {
+        return console.log(error);
+      });
+    }
+  },
+  mounted: function mounted() {},
+  created: function created() {
+    this.fetchHotels();
+    this.fetchRoomType();
   }
 });
 
@@ -2007,6 +2031,17 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -38248,9 +38283,57 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _vm._m(0),
+    _c("div", { staticClass: "jumbotron" }, [
+      _c("div", { staticClass: "container" }, [
+        _c("div", { staticClass: "row" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-6" }, [
+            _c("form", [
+              _vm._m(1),
+              _vm._v(" "),
+              _vm._m(2),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "roomType" } }, [
+                  _vm._v("Room Type")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  { staticClass: "form-control", attrs: { id: "roomType" } },
+                  [
+                    _c("option", { attrs: { selected: "" } }, [
+                      _vm._v("Select Room Type...")
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(_vm.roomType, function(room, index) {
+                      return _c("option", { key: index }, [
+                        _vm._v(_vm._s(room.type))
+                      ])
+                    })
+                  ],
+                  2
+                )
+              ]),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-success btn-block",
+                  attrs: { type: "submit" }
+                },
+                [_vm._v("Search")]
+              )
+            ])
+          ])
+        ])
+      ])
+    ]),
     _vm._v(" "),
     _c("div", { staticClass: "container" }, [
+      _c("h3", { staticClass: "mt-5" }, [_vm._v("Hotels near you")]),
+      _vm._v(" "),
       _c(
         "div",
         { staticClass: "row" },
@@ -38274,9 +38357,7 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("p", { staticClass: "card-text" }, [
-                  _vm._v(
-                    "Some quick example text to build on the card title and make up the bulk of the card's content."
-                  )
+                  _vm._v("Some quick example text to build on the card title.")
                 ]),
                 _vm._v(" "),
                 _c(
@@ -38298,76 +38379,40 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "jumbotron" }, [
-      _c("div", { staticClass: "container" }, [
-        _c("h1", { staticClass: "display-4" }, [_vm._v("Search Hotels")]),
-        _vm._v(" "),
-        _c("p", { staticClass: "lead" }, [
-          _vm._v(
-            "This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information."
-          )
-        ]),
-        _vm._v(" "),
-        _c("hr", { staticClass: "my-4" }),
-        _vm._v(" "),
-        _c("form", [
-          _c("div", { staticClass: "form-row align-items-center" }, [
-            _c("div", { staticClass: "col-sm-3 my-1" }, [
-              _c(
-                "label",
-                {
-                  staticClass: "sr-only",
-                  attrs: { for: "inlineFormInputName" }
-                },
-                [_vm._v("Start Date")]
-              ),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control",
-                attrs: {
-                  type: "text",
-                  id: "inlineFormInputName",
-                  placeholder: "Jane Doe"
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-sm-3 my-1" }, [
-              _c(
-                "label",
-                {
-                  staticClass: "sr-only",
-                  attrs: { for: "inlineFormInputGroupUsername" }
-                },
-                [_vm._v("End Date")]
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "input-group" }, [
-                _c("div", { staticClass: "input-group-prepend" }, [
-                  _c("div", { staticClass: "input-group-text" }, [_vm._v("@")])
-                ]),
-                _vm._v(" "),
-                _c("input", {
-                  staticClass: "form-control",
-                  attrs: {
-                    type: "text",
-                    id: "inlineFormInputGroupUsername",
-                    placeholder: "Username"
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-auto my-1" }, [
-              _c(
-                "button",
-                { staticClass: "btn btn-danger", attrs: { type: "submit" } },
-                [_vm._v("Search")]
-              )
-            ])
-          ])
-        ])
+    return _c("div", { staticClass: "col-md-6" }, [
+      _c("h1", { staticClass: "display-4" }, [_vm._v("Search Hotels")]),
+      _vm._v(" "),
+      _c("p", { staticClass: "lead" }, [
+        _vm._v(
+          "This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information."
+        )
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "startdate" } }, [_vm._v("Start Date")]),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form-control",
+        attrs: { type: "text", id: "startdate", placeholder: "Start Date" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "enddate" } }, [_vm._v("End Date")]),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form-control",
+        attrs: { type: "text", id: "enddate", placeholder: "End Date" }
+      })
     ])
   }
 ]
@@ -38435,12 +38480,50 @@ var render = function() {
         ]
       ),
       _vm._v(" "),
-      _c("router-view")
+      _c("router-view", {
+        staticClass: "bg-light",
+        staticStyle: { padding: "15px" }
+      }),
+      _vm._v(" "),
+      _vm._m(0)
     ],
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("footer", { staticClass: "text-muted" }, [
+      _c("div", { staticClass: "container" }, [
+        _c("p", { staticClass: "float-right" }, [
+          _c("a", { attrs: { href: "#" } }, [_vm._v("Back to top")])
+        ]),
+        _vm._v(" "),
+        _c("p", [
+          _vm._v(
+            "Album example is © Bootstrap, but please download and customize it for yourself!"
+          )
+        ]),
+        _vm._v(" "),
+        _c("p", [
+          _vm._v("New to Bootstrap? "),
+          _c("a", { attrs: { href: "https://getbootstrap.com/" } }, [
+            _vm._v("Visit the homepage")
+          ]),
+          _vm._v(" or read our "),
+          _c(
+            "a",
+            { attrs: { href: "/docs/4.3/getting-started/introduction/" } },
+            [_vm._v("getting started guide")]
+          ),
+          _vm._v(".")
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
