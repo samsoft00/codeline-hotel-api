@@ -55,8 +55,30 @@ Route::group([
         'middleware'    =>  'auth:api'
     ], function(){
         Route::post('', 'RoomController@store');
-        Route::patch('{id}', 'RoomController@update');
-        Route::destroy('{id}', 'RoomController@destroy');
+        Route::put('{id}', 'RoomController@update');
+        Route::delete('{id}', 'RoomController@destroy');
     });
 });
 
+/**
+ * Return Rooms type payload
+ */
+Route::group([
+    'namespace'     =>  'Api',
+    'middleware'    =>  'api',
+    'prefix'        =>  'room-type'
+], function(){
+    Route::get('', 'RoomTypeController@index');
+});
+
+
+/**
+ * Return Rooms Capacity payload
+ */
+Route::group([
+    'namespace'     =>  'Api',
+    'middleware'    =>  'api',
+    'prefix'        =>  'room-capacity'
+], function(){
+    Route::get('', 'RoomCapacityController@index');
+});
