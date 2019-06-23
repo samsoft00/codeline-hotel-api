@@ -94,6 +94,6 @@ $factory->define(Room::class, function(Faker $faker){
         'name'              =>  $faker->randomElement($array = array ('A1', 'B4', 'B2','C4', 'C5')),
         'room_type_id'      =>  $roomType->id,
         'room_capacity_id'  =>  $roomCapacity->id,
-        'image'             =>  $faker->imageUrl($width = 640, $height = 480)
+        'image'             =>  $faker->imageUrl($width = 640, $height = 280)
     ];
 });

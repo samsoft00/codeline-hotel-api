@@ -49,6 +49,7 @@ Route::group([
     'middleware'    =>  'api',
     'prefix'        =>  'room'
 ], function(){
+    Route::get('/search', 'RoomController@search');
     Route::get('{id}', 'RoomController@show');
 
     Route::group([

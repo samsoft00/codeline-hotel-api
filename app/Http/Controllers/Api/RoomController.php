@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Room;
+use phpDocumentor\Reflection\Types\Integer;
+use Carbon\Carbon;
 
-class RoomController extends Controller
+class RoomController extends ApiBaseController
 {
     /**
      * Display a listing of the resource.
@@ -15,6 +18,27 @@ class RoomController extends Controller
     public function index()
     {
         //
+    }
+
+    public function search(Request $request)
+    {
+        $searchArray = [
+            'type'          =>  $request->query('type'),
+            'start_date'    =>  Carbon::parse( $request->query('start_date') ),
+            'end_date'      =>  Carbon::parse( $request->query('end_date') ),
+        ];
+
+        //type, start_date, end_date
+        $availableRooms = Room::with(['type', 'capacity', 'hotel'])->where(function($query) use ($searchArray) {
+            
+            //check for types
+            $query->whereHas('type', function($q) use ($searchArray) {
+                $q->where('id', $searchArray['type']);
+            });
+
+        })->get();
+
+        return $this->respond($availableRooms);
     }
 
     /**
