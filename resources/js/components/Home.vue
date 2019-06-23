@@ -9,21 +9,20 @@
               <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>            
             </div>
             <div class="col-md-6">
-            
               <form>
                 <div class="form-group">
                   <label for="startdate">Start Date</label>
-                  <input type="text" class="form-control" id="startdate" placeholder="Start Date">
+                  <datepicker v-model="start_date" :config="options" placeholder="Start Date"></datepicker>
                 </div>
                 <div class="form-group">
                   <label for="enddate">End Date</label>
-                  <input type="text" class="form-control" id="enddate" placeholder="End Date">
+                  <datepicker v-model="end_date" :config="options" placeholder="End Date"></datepicker>
                 </div>
                 <div class="form-group">
                   <label for="roomType">Room Type</label>
                   <select id="roomType" class="form-control">
                     <option selected>Select Room Type...</option>
-                    <option v-for="(room, index) in roomType" :key="index">{{ room.type }}</option>
+                    <option v-for="(room, index) in roomType" :key="index" v-text="room.type"></option>
                   </select>
                 </div>
                 <button type="submit" class="btn btn-success btn-block">Search</button>
@@ -55,11 +54,24 @@
 </template>
 
 <script>
+  import Datepicker from 'vue-bootstrap-datetimepicker';  
+
   export default {
+    components:{
+      Datepicker
+    },
     data(){
       return {
+        start_date: null,
+        end_date: null,
         hotels:[],
-        roomType: []
+        roomType: [],
+        options: {
+          format: 'DD-MM-YYYY',
+          useCurrent: false,
+          showClear: true,
+          showClose: true,
+        }        
       }
     },
     methods:{

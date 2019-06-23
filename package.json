@@ -24,8 +24,8 @@
         "bootstrap-vue": "^2.0.0-rc.24",
         "jquery": "^3.4.1",
         "vue": "^2.6.10",
+        "vue-bootstrap-datetimepicker": "^5.0.1",
         "vue-router": "^3.0.6",
-        "vue-toastr": "^2.0.16",
-        "vuejs-datepicker": "^1.5.4"
+        "vue-toastr": "^2.0.16"
     }
 }

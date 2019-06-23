@@ -8,6 +8,8 @@ require('./bootstrap');
 
 import Vue from 'vue';
 import bootstrap from 'bootstrap';
+import 'pc-bootstrap4-datetimepicker/build/css/bootstrap-datetimepicker.css';
+
 import Toastr from 'vue-toastr';
 import '@/sass/app.scss';
 
