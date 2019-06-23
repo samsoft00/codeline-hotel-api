@@ -13,7 +13,7 @@ use App\Http\Controllers\Api\AuthController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
+//Authentication route
 Route::group([
     'namespace'     =>  'Api',
     'middleware'    =>  'api',
@@ -32,6 +32,7 @@ Route::group([
     });
 });
 
+//Hotel route
 Route::group([
     'namespace'     =>  'Api',
     'middleware'    =>  'api',
@@ -41,4 +42,21 @@ Route::group([
     Route::get('{id}', 'HotelsController@show');
 });
 
+
+//Room route
+Route::group([
+    'namespace'     =>  'Api',
+    'middleware'    =>  'api',
+    'prefix'        =>  'room'
+], function(){
+    Route::get('{id}', 'RoomController@show');
+
+    Route::group([
+        'middleware'    =>  'auth:api'
+    ], function(){
+        Route::post('', 'RoomController@store');
+        Route::patch('{id}', 'RoomController@update');
+        Route::destroy('{id}', 'RoomController@destroy');
+    });
+});
 
