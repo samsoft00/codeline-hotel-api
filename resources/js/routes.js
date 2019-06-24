@@ -5,6 +5,7 @@ import Home from '@/js/components/Home';
 import Auth from '@/js/components/Auth';
 import Search from '@/js/components/Search';
 import Hotel from '@/js/components/Hotel';
+import Room from '@/js/components/Room';
 
 Vue.use(VueRouter);
 //meta: { requiresAuth: true }
@@ -31,7 +32,12 @@ const router = new VueRouter({
             path: '/hotel/:hotelId',
             name: 'hotel',
             component: Hotel
-        }            
+        },
+        {
+            path: '/room/:roomId',
+            name: 'room',
+            component: Room
+        }                    
     ]
 });
 
