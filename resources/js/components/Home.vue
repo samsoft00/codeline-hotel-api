@@ -1,44 +1,50 @@
 <template>
     <div>
-      <div class="container">
-        <div class="jumbotron">
 
-          <div class="row">
-            <div class="col-md-8">
-              <h1 class="display-4">Search Hotels</h1>
-              <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>            
-            </div>
-            <div class="col-md-4">
-              <form role="form" v-on:submit.prevent="handleSearchSubmit()">
-                <div class="form-group">
-                  <label for="startdate">Start Date</label>
-                  <datepicker v-model="search.start_date" :config="options" placeholder="Start Date"></datepicker>
-                </div>
-                <div class="form-group">
-                  <label for="enddate">End Date</label>
-                  <datepicker v-model="search.end_date" :config="options" placeholder="End Date"></datepicker>
-                </div>
-                <div class="form-group">
-                  <label for="roomType">Room Type</label>
-                  <select id="roomType" v-model="search.type" class="form-control">
-                    <option disabled value="">Room Type</option>
-                    <option v-for="(room, index) in roomType" :key="index" v-bind:value="room.id">{{ room.type }}</option>
-                  </select>
-                </div>
-                <button type="submit" class="btn btn-success btn-block">Search</button>
-              </form>            
 
+      <div class="home">
+        <div class="background_image" style="background-image:url(images/index_1.jpg)"></div>
+        <div class="home_container">
+          <div class="container">
+            <div class="row">
+              <div class="col">
+                <div class="home_content text-center">
+                  <div class="home_title">Find Hotel Near You</div>
+                  <div class="booking_form_container">
+                    <form role="form" v-on:submit.prevent="handleSearchSubmit()">
+                      <div class="d-flex flex-xl-row flex-column align-items-start justify-content-start">
+                        <div class="booking_input_container d-flex flex-row align-items-start justify-content-start flex-wrap">
+                          <!-- <div><input type="text" v-model="search.start_date" class="datepicker booking_input booking_input_a booking_in" placeholder="Start Date" required="required"></div> -->
+                          <div>
+                            <datepicker :inputClass=options.style format="dd-MM-yyyy" placeholder="Start Date" v-model="search.start_date"></datepicker>
+                          </div>
+                          <div>
+                            <datepicker :inputClass=options.style format="dd-MM-yyyy" placeholder="End Date" v-model="search.end_date"></datepicker>
+                            <!-- <input type="text" v-model="search.end_date" class="enddate booking_input booking_input_a booking_out" placeholder="End Date" required="required"> -->
+                          </div>
+                          <div>
+                            <select v-model="search.type" class="booking_input" id="type">
+                              <option :value="null" disabled>Room Type</option>
+                              <option style="color:#777777" v-for="(room, index) in roomType" :key="index" v-bind:value="room.id">{{ room.type }}</option>
+                            </select>                            
+                          </div>
+                        </div>
+                        <div><button type="submit" class="booking_button trans_200">Search</button></div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-
         </div>
-      </div>
-      
+      </div> 
+
       <div class="container">
         <div class="row">
           <div class="col-lg-12">
             <div class="center-title">
-              <h2 class="title">Hotels Near You</h2>
+              <h2 class="title" style="padding-top:10px">Hotels Near You</h2>
             </div>
           </div>
         </div>
@@ -67,7 +73,8 @@
 </template>
 
 <script>
-  import Datepicker from 'vue-bootstrap-datetimepicker';  
+  import Datepicker from 'vuejs-datepicker'; 
+  import moment from 'moment'; 
 
   export default {
     components:{
@@ -83,23 +90,31 @@
         hotels:[],
         roomType: [],
         options: {
-          format: 'DD-MM-YYYY',
+          format: 'dd-MM-yyyy',
+          style: 'booking_input booking_input_a booking_in',
           useCurrent: false,
           showClear: true,
-          showClose: true,
+          showClose: true
         }        
       }
     },
     methods:{
       handleSearchSubmit(){
         //check for null value
+        console.log();
         if(this.search.start_date === null 
             || this.search.end_date === null 
             || this.search.type === null){
-              return this.$toastr.e("One of the field is empty, check and try again!");
+              return this.$toastr.w("One of the field is empty, check and try again!");
             }
 
-        this.$router.push({ name: 'search', query: this.search });
+        let payload = {
+          start_date: moment(this.search.start_date).format('DD-MM-YYYY'),
+          end_date: moment(this.search.end_date).format('DD-MM-YYYY'),
+          type: this.search.type
+        };
+
+        this.$router.push({ name: 'search', query: payload });
       },
       fetchHotels(){
         axios.get('/api/hotels')
@@ -109,7 +124,6 @@
             })
             .catch(error => console.log(error));
       },
-
       fetchRoomType(){
         axios.get('/api/room-type')
             .then(response => response.data)
@@ -120,7 +134,10 @@
             .catch(error => console.log(error));
       }
     },
-    mounted() {},
+    mounted() {
+      // this.search.start_date.datepicker({dateFormat: 'dd-mm-yy'});
+      // $('.enddate').datepicker({dateFormat: 'dd-mm-yy'});
+    },
     created(){
       this.fetchHotels();
       this.fetchRoomType();

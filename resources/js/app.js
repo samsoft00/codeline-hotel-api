@@ -8,7 +8,13 @@ require('./bootstrap');
 
 import Vue from 'vue';
 import bootstrap from 'bootstrap';
-import 'pc-bootstrap4-datetimepicker/build/css/bootstrap-datetimepicker.css';
+global.$ = global.jQuery = require('jquery');
+
+//import theme
+import '@/theme/plugins/scrollmagic/ScrollMagic.min.js';
+import '@/theme/plugins/jquery-datepicker/jquery-ui.js';
+import '@/theme/plugins/colorbox/jquery.colorbox-min.js';
+import '@/theme/js/custom.js';
 
 import Toastr from 'vue-toastr';
 import '@/sass/app.scss';

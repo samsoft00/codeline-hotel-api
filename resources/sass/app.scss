@@ -1,3 +1,11 @@
 
 @import 'node_modules/bootstrap/scss/bootstrap';
+@import '../theme/plugins/font-awesome-4.7.0/css/font-awesome.min.css';
+@import '../theme/plugins/OwlCarousel2-2.3.4/owl.carousel.css';
+@import '../theme/plugins/OwlCarousel2-2.3.4/owl.theme.default.css';
+@import '../theme/plugins/OwlCarousel2-2.3.4/animate.css';
+@import '../theme/plugins/jquery-datepicker/jquery-ui.css';
+@import '../theme/plugins/colorbox/colorbox.css';
+@import '../theme/main_styles.css';
+@import '../theme/responsive.css';
 @import 'vue-toastr/src/vue-toastr.scss';
