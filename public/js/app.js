@@ -2208,13 +2208,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       email: '',
       password: '',
       confirmpassword: '',
-      errors: []
+      validationErrors: ''
     };
   },
   methods: {
@@ -2227,7 +2228,7 @@ __webpack_require__.r(__webpack_exports__);
         'confirm-password': this.confirmpassword
       };
       console.log(payload);
-      axios.post('/auth/register', payload).then(function (payload) {
+      axios.post('/api/auth/register', payload).then(function (payload) {
         console.log(payload);
 
         if (payload.status === 200) {//  user.access_token = payload.data.access_token;
@@ -2236,8 +2237,12 @@ __webpack_require__.r(__webpack_exports__);
           //  this.$router.push({name: 'home'});//temporary
         }
       })["catch"](function (error) {
-        return _this.$toastr.e(error);
-      });
+        if (error.response.status === 422) {
+          _this.validationErrors = error.response.data.errors;
+        } else {
+          _this.$toastr.e(error.response.data.message);
+        }
+      }); //
     }
   }
 });
@@ -58994,120 +58999,130 @@ var render = function() {
               }
             },
             [
-              _c("fieldset", [
-                _c("h2", [_vm._v("Register")]),
-                _vm._v(" "),
-                _c("hr", { staticClass: "colorgraph" }),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.email,
-                        expression: "email"
-                      }
-                    ],
-                    staticClass: "form-control input-lg",
-                    attrs: {
-                      type: "email",
-                      name: "email",
-                      placeholder: "Email Address",
-                      required: ""
-                    },
-                    domProps: { value: _vm.email },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.email = $event.target.value
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.password,
-                        expression: "password"
-                      }
-                    ],
-                    staticClass: "form-control input-lg",
-                    attrs: {
-                      type: "password",
-                      name: "password",
-                      placeholder: "Password",
-                      required: ""
-                    },
-                    domProps: { value: _vm.password },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.password = $event.target.value
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.confirmpassword,
-                        expression: "confirmpassword"
-                      }
-                    ],
-                    staticClass: "form-control input-lg",
-                    attrs: {
-                      type: "password",
-                      name: "confirm-password",
-                      placeholder: "Confirm Password",
-                      required: ""
-                    },
-                    domProps: { value: _vm.confirmpassword },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.confirmpassword = $event.target.value
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("hr", { staticClass: "colorgraph" }),
-                _vm._v(" "),
-                _c("div", { staticClass: "row" }, [
-                  _vm._m(1),
+              _c(
+                "fieldset",
+                [
+                  _c("h2", [_vm._v("Register")]),
                   _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "col-xs-6 col-sm-6 col-md-6" },
-                    [
-                      _c(
-                        "router-link",
+                  _vm.validationErrors
+                    ? _c("validation-errors", {
+                        attrs: { errors: _vm.validationErrors }
+                      })
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c("hr", { staticClass: "colorgraph" }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("input", {
+                      directives: [
                         {
-                          staticClass: "btn btn-lg btn-primary btn-block",
-                          attrs: { tag: "a", to: "register" }
-                        },
-                        [_vm._v("Register")]
-                      )
-                    ],
-                    1
-                  )
-                ])
-              ])
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.email,
+                          expression: "email"
+                        }
+                      ],
+                      staticClass: "form-control input-lg",
+                      attrs: {
+                        type: "email",
+                        name: "email",
+                        placeholder: "Email Address",
+                        required: ""
+                      },
+                      domProps: { value: _vm.email },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.email = $event.target.value
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.password,
+                          expression: "password"
+                        }
+                      ],
+                      staticClass: "form-control input-lg",
+                      attrs: {
+                        type: "password",
+                        name: "password",
+                        placeholder: "Password",
+                        required: ""
+                      },
+                      domProps: { value: _vm.password },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.password = $event.target.value
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.confirmpassword,
+                          expression: "confirmpassword"
+                        }
+                      ],
+                      staticClass: "form-control input-lg",
+                      attrs: {
+                        type: "password",
+                        name: "confirm-password",
+                        placeholder: "Confirm Password",
+                        required: ""
+                      },
+                      domProps: { value: _vm.confirmpassword },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.confirmpassword = $event.target.value
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("hr", { staticClass: "colorgraph" }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row" }, [
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "col-xs-6 col-sm-6 col-md-6" },
+                      [
+                        _c(
+                          "router-link",
+                          {
+                            staticClass: "btn btn-lg btn-primary btn-block",
+                            attrs: { tag: "a", to: "register" }
+                          },
+                          [_vm._v("Register")]
+                        )
+                      ],
+                      1
+                    )
+                  ])
+                ],
+                1
+              )
             ]
           )
         ])
@@ -78374,15 +78389,13 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
  * a simple convenience so we don't have to attach every token manually.
  */
 
-/*
-let token = document.head.querySelector('meta[name="csrf-token"]');
+var token = document.head.querySelector('meta[name="csrf-token"]');
 
 if (token) {
-    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+  window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 } else {
-    console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+  console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
-*/
 
 var tokenData = JSON.parse(window.localStorage.getItem('user'));
 

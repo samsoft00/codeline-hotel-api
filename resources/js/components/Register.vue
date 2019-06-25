@@ -25,6 +25,7 @@
                 <form role="form" class="jumbotron" style="margin-top: 50px;" v-on:submit.prevent="handleRegisterFormSubmit()">
                     <fieldset>
                         <h2>Register</h2>
+                        <validation-errors :errors="validationErrors" v-if="validationErrors"></validation-errors>
                         <hr class="colorgraph">
                         <div class="form-group">
                             <input type="email" name="email" v-model="email" class="form-control input-lg" placeholder="Email Address" required>
@@ -63,7 +64,7 @@
                 email: '',
                 password: '',
                 confirmpassword: '',
-                errors: []
+                validationErrors: ''
             }
         },
         methods: {
@@ -76,7 +77,7 @@
 
                 console.log(payload);
 
-                axios.post('/auth/register', payload)
+                axios.post('/api/auth/register', payload)
                      .then(payload => {
                          console.log(payload);
                          if(payload.status === 200){
@@ -86,7 +87,13 @@
                             //  this.$router.push({name: 'home'});//temporary
                          }
                      })
-                     .catch(error => this.$toastr.e(error));
+                     .catch(error => {
+                         if(error.response.status === 422){
+                             this.validationErrors = error.response.data.errors;
+                         }else{
+                             this.$toastr.e(error.response.data.message)
+                         }
+                     });//
             }
         }
     }
