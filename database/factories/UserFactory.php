@@ -102,7 +102,25 @@ $factory->define(Customer::class, function(Faker $faker){
 
 $factory->define(Room::class, function(Faker $faker){
 
-    $roomImage = [];
+    $roomImage = [
+        'rt_lamana-executive-king_1502466269.png',
+        '613027204_750x422.png',
+        'xRoyal-Palm-Hotel-Executive-Suite.png.pagespeed.ic.qkYZKA_v7e.jpg',
+        'premium-room.png',
+        'Hotel-660x400.png',
+        'premier_room_red_at_hotel.png',
+        'f3e29c605a81097cb065165ef57c17a0.png',
+        '63b098ea_z.jpg',
+        'aezhudv0m4dpxa7ffbcn.png',
+        '849827_1.jpg',
+        'Bre1-Resized.png',
+        'rooms-hero.png',
+        'Continental_hotel_bedroom.jpg',
+        'sun-star-room-2-800x560.png',
+        'home-carouselimg-4.png',
+        'main-canopy-fireplace_1.jpg',
+        'luxury-roomaw05-1954a49631c9073.png'
+    ];
 
     $roomType       = RoomType::inRandomOrder()->first();
     $roomCapacity   = RoomCapacity::inRandomOrder()->first();
@@ -114,7 +132,7 @@ $factory->define(Room::class, function(Faker $faker){
         'name'              =>  $faker->randomElement($array = array ('A1', 'B4', 'B2','C4', 'C5')),
         'room_type_id'      =>  $roomType->id,
         'room_capacity_id'  =>  $roomCapacity->id,
-        'image'             =>  $faker->imageUrl($width = 640, $height = 280)
+        'image'             =>  $roomImage[array_rand($roomImage, 1)]
     ];
 });
 

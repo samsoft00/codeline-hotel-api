@@ -80,11 +80,11 @@
             },
 
             getHomeBackground(){
-                return `background-image:url(${this.room.hotel.image})`;
+                return `background-image:url(${'/images/hotel/'+this.room.hotel.image})`;
             },
 
             getRoomBackground(){
-                return `background-image:url(${this.room.image})`;
+                return `background-image:url(${'/images/hotel/'+this.room.image})`;
             }
         },
         mounted(){

@@ -1,7 +1,7 @@
 <template>
     <div>
       <div class="home_sub">
-        <div class="background_image" style="background-image:url(images/index_1.jpg)"></div>
+        <div class="background_image" style="background-image:url(/images/hotel/premium-room.png)"></div>
         <div class="home_container">
           <div class="container">
             <div class="row">

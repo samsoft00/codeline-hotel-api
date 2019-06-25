@@ -44,7 +44,7 @@ const router = new VueRouter({
             name: 'booking',
             component: Booking,
             meta: { requiresAuth: true }
-        }                  
+        }
     ]
 });
 
