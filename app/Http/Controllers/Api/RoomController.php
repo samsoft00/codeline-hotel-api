@@ -70,7 +70,11 @@ class RoomController extends ApiBaseController
      */
     public function show($id)
     {
-        //
+        $room = Room::with(['type', 'capacity', 'hotel'])->find($id);
+        if($room == null){
+            return $this->setStatusCode(404)->respond('Resources not found!');
+        }
+        return $this->respond($room);
     }
 
     /**

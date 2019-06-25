@@ -4,7 +4,7 @@
 
         <header class="header">
             <div class="header_content d-flex flex-row align-items-center justify-content-start">
-                <div class="logo"><a href="#">CodeLine</a></div>
+                <div class="logo"><router-link tag="a" to="/">CodeLine</router-link></div><!-- <a href="#"></a> -->
                 <div class="ml-auto d-flex flex-row align-items-center justify-content-start">
                     <nav class="main_nav">
                         <ul class="d-flex flex-row align-items-start justify-content-start">

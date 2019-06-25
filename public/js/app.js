@@ -58750,7 +58750,29 @@ var render = function() {
   return _c(
     "div",
     [
-      _vm._m(0),
+      _c("header", { staticClass: "header" }, [
+        _c(
+          "div",
+          {
+            staticClass:
+              "header_content d-flex flex-row align-items-center justify-content-start"
+          },
+          [
+            _c(
+              "div",
+              { staticClass: "logo" },
+              [
+                _c("router-link", { attrs: { tag: "a", to: "/" } }, [
+                  _vm._v("CodeLine")
+                ])
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _vm._m(0)
+          ]
+        )
+      ]),
       _vm._v(" "),
       _vm._m(1),
       _vm._v(" "),
@@ -58766,94 +58788,69 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("header", { staticClass: "header" }, [
-      _c(
-        "div",
-        {
-          staticClass:
-            "header_content d-flex flex-row align-items-center justify-content-start"
-        },
-        [
-          _c("div", { staticClass: "logo" }, [
-            _c("a", { attrs: { href: "#" } }, [_vm._v("CodeLine")])
-          ]),
-          _vm._v(" "),
+    return _c(
+      "div",
+      {
+        staticClass:
+          "ml-auto d-flex flex-row align-items-center justify-content-start"
+      },
+      [
+        _c("nav", { staticClass: "main_nav" }, [
           _c(
-            "div",
+            "ul",
             {
               staticClass:
-                "ml-auto d-flex flex-row align-items-center justify-content-start"
+                "d-flex flex-row align-items-start justify-content-start"
             },
             [
-              _c("nav", { staticClass: "main_nav" }, [
-                _c(
-                  "ul",
-                  {
-                    staticClass:
-                      "d-flex flex-row align-items-start justify-content-start"
-                  },
-                  [
-                    _c("li", { staticClass: "active" }, [
-                      _c("a", { attrs: { href: "index.html" } }, [
-                        _vm._v("Home")
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("li", [
-                      _c("a", { attrs: { href: "about.html" } }, [
-                        _vm._v("About us")
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("li", [
-                      _c("a", { attrs: { href: "#" } }, [_vm._v("Rooms")])
-                    ]),
-                    _vm._v(" "),
-                    _c("li", [
-                      _c("a", { attrs: { href: "blog.html" } }, [
-                        _vm._v("Blog")
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("li", [
-                      _c("a", { attrs: { href: "contact.html" } }, [
-                        _vm._v("Contact")
-                      ])
-                    ])
-                  ]
-                )
+              _c("li", { staticClass: "active" }, [
+                _c("a", { attrs: { href: "index.html" } }, [_vm._v("Home")])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "book_button" }, [
-                _c("a", { attrs: { href: "booking.html" } }, [
-                  _vm._v("Book Online")
+              _c("li", [
+                _c("a", { attrs: { href: "about.html" } }, [_vm._v("About us")])
+              ]),
+              _vm._v(" "),
+              _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("Rooms")])]),
+              _vm._v(" "),
+              _c("li", [
+                _c("a", { attrs: { href: "blog.html" } }, [_vm._v("Blog")])
+              ]),
+              _vm._v(" "),
+              _c("li", [
+                _c("a", { attrs: { href: "contact.html" } }, [
+                  _vm._v("Contact")
                 ])
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass:
-                    "header_phone d-flex flex-row align-items-center justify-content-center"
-                },
-                [
-                  _c("img", { attrs: { src: "images/phone.png", alt: "" } }),
-                  _vm._v(" "),
-                  _c("span", [_vm._v("0183-12345678")])
-                ]
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "hamburger" }, [
-                _c("i", {
-                  staticClass: "fa fa-bars",
-                  attrs: { "aria-hidden": "true" }
-                })
               ])
             ]
           )
-        ]
-      )
-    ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "book_button" }, [
+          _c("a", { attrs: { href: "booking.html" } }, [_vm._v("Book Online")])
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass:
+              "header_phone d-flex flex-row align-items-center justify-content-center"
+          },
+          [
+            _c("img", { attrs: { src: "images/phone.png", alt: "" } }),
+            _vm._v(" "),
+            _c("span", [_vm._v("0183-12345678")])
+          ]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "hamburger" }, [
+          _c("i", {
+            staticClass: "fa fa-bars",
+            attrs: { "aria-hidden": "true" }
+          })
+        ])
+      ]
+    )
   },
   function() {
     var _vm = this
@@ -77610,16 +77607,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
 global.$ = global.jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/src/jquery.js"); //import theme
-// import '@/theme/js/jquery-3.3.1.min.js';
-// import '@/theme/plugins/greensock/TweenMax.min.js';
-// import '@/theme/plugins/greensock/TimelineMax.min.js';
 
- // import '@/theme/plugins/greensock/animation.gsap.min.js';
-// import '@/theme/plugins/greensock/ScrollToPlugin.min.js';
-// import '@/theme/plugins/OwlCarousel2-2.3.4/owl.carousel.js';
-// import '@/theme/plugins/easing/easing.js';
-// import '@/theme/plugins/progressbar/progressbar.min.js';
-// import '@/theme/plugins/parallax-js-master/parallax.min.js';
 
 
 
