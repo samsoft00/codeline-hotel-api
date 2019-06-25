@@ -22,7 +22,7 @@
 
         <div class="row">
             <div class="col-md-6 offset-md-3">
-                <form role="form" class="jumbotron" style="margin-top: 50px;" v-on:submit.prevent="handleLoginFormSubmit()">
+                <form role="form" class="jumbotron" style="margin-top: 50px;" v-on:submit.prevent="handleRegisterFormSubmit()">
                     <fieldset>
                         <h2>Register</h2>
                         <hr class="colorgraph">
@@ -67,7 +67,26 @@
             }
         },
         methods: {
-            handleLoginFormSubmit(){
+            handleRegisterFormSubmit(){
+                let payload = {
+                    email : this.email,
+                    password: this.password,
+                    'confirm-password': this.confirmpassword
+                }
+
+                console.log(payload);
+
+                axios.post('/auth/register', payload)
+                     .then(payload => {
+                         console.log(payload);
+                         if(payload.status === 200){
+                            //  user.access_token = payload.data.access_token;
+                            //  user.refresh_token = payload.data.refresh_token;
+                            //  window.localStorage.setItem('user', JSON.stringify(user));
+                            //  this.$router.push({name: 'home'});//temporary
+                         }
+                     })
+                     .catch(error => this.$toastr.e(error));
             }
         }
     }

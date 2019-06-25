@@ -2218,7 +2218,27 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    handleLoginFormSubmit: function handleLoginFormSubmit() {}
+    handleRegisterFormSubmit: function handleRegisterFormSubmit() {
+      var _this = this;
+
+      var payload = {
+        email: this.email,
+        password: this.password,
+        'confirm-password': this.confirmpassword
+      };
+      console.log(payload);
+      axios.post('/auth/register', payload).then(function (payload) {
+        console.log(payload);
+
+        if (payload.status === 200) {//  user.access_token = payload.data.access_token;
+          //  user.refresh_token = payload.data.refresh_token;
+          //  window.localStorage.setItem('user', JSON.stringify(user));
+          //  this.$router.push({name: 'home'});//temporary
+        }
+      })["catch"](function (error) {
+        return _this.$toastr.e(error);
+      });
+    }
   }
 });
 
@@ -58969,7 +58989,7 @@ var render = function() {
               on: {
                 submit: function($event) {
                   $event.preventDefault()
-                  return _vm.handleLoginFormSubmit()
+                  return _vm.handleRegisterFormSubmit()
                 }
               }
             },
