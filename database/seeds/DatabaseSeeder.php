@@ -5,6 +5,7 @@ use App\User;
 use App\Hotel;
 use App\Customer;
 use App\Room;
+use App\Booking;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,14 +16,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+
         $this->call([
             RoomTypeSeeder::class,
-            RoomCapacitySeeder::class
-        ]);
+            RoomCapacitySeeder::class,
+            PriceSeeder::class
+        ]);        
 
-        factory(User::class, 20)->create();
+        factory(User::class, 10)->create();
         factory(Customer::class, 20)->create();
         factory(Hotel::class, 30)->create();
         factory(Room::class, 100)->create();
+        factory(Booking::class, 20)->create();        
     }
 }

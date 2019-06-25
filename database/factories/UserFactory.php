@@ -1,15 +1,17 @@
 <?php
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
+use App\Room;
 use App\User;
-use Illuminate\Support\Str;
-use Faker\Generator as Faker;
 use App\Hotel;
+use App\Price;
+use App\Booking;
 use App\Customer;
 use App\RoomType;
-use App\Room;
+use Carbon\Carbon;
 use App\RoomCapacity;
-use App\Price;
+use Illuminate\Support\Str;
+use Faker\Generator as Faker;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,7 +66,10 @@ $factory->define(Hotel::class, function(Faker $faker){
         'main-canopy-fireplace_1.jpg',
         'luxury-roomaw05-1954a49631c9073.png',
         '63b098ea_z.jpg',
-        ''
+        'aezhudv0m4dpxa7ffbcn.png',
+        '849827_1.jpg',
+        'Bre1-Resized.png',
+        'rooms-hero.png'
     ];
 
     return [
@@ -76,7 +81,7 @@ $factory->define(Hotel::class, function(Faker $faker){
         'zipcode'   =>  $faker->postcode,
         'phone_number'  =>  $faker->phoneNumber,
         'email'     =>  $faker->companyEmail,
-        'image'     =>  $faker->imageUrl($width = 640, $height = 480)
+        'image'     =>  $hotel_image[array_rand($hotel_image, 1)]
     ];
 });
 
@@ -96,6 +101,9 @@ $factory->define(Customer::class, function(Faker $faker){
 });
 
 $factory->define(Room::class, function(Faker $faker){
+
+    $roomImage = [];
+
     $roomType       = RoomType::inRandomOrder()->first();
     $roomCapacity   = RoomCapacity::inRandomOrder()->first();
     $hotel          = Hotel::inRandomOrder()->first();
@@ -107,5 +115,17 @@ $factory->define(Room::class, function(Faker $faker){
         'room_type_id'      =>  $roomType->id,
         'room_capacity_id'  =>  $roomCapacity->id,
         'image'             =>  $faker->imageUrl($width = 640, $height = 280)
+    ];
+});
+
+$factory->define(Booking::class, function(Faker $faker){
+    $room = Room::inRandomOrder()->first();
+    $customer = Customer::inRandomOrder()->first();
+
+    return [
+        'room_id'       =>  $room->id,
+        'date_start'    =>  Carbon::now()->subWeek(array_rand([2, 5, 1, 7, 3], 1)),
+        'date_end'      =>  Carbon::now()->addWeek(array_rand([2, 5, 1, 7, 3], 1)),
+        'customer_id'   =>  $customer->id
     ];
 });

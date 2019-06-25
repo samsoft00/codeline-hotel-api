@@ -1,5 +1,6 @@
 <?php
 
+use App\RoomType;
 use Illuminate\Database\Seeder;
 
 class PriceSeeder extends Seeder
@@ -19,7 +20,7 @@ class PriceSeeder extends Seeder
         ];
         
         foreach ($roomTypes as $type) {
-            DB::table('price')->insert(['room_type_id' => $type->type, 'price' => $priceArray[$type->type]]);
+            DB::table('price')->insert(['room_type_id' => $type->id, 'price' => $priceArray[$type->type]]);
         }
     }
 }
