@@ -11,6 +11,6 @@ class RoomType extends Model
     protected $table = 'room_type';
 
     public function cost(){
-        return $this->hasOne(Price::class, 'id', 'room_type_id');
+        return $this->hasOne(Price::class, 'room_type_id', 'id');
     }
 }

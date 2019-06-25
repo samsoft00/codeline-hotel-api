@@ -22,13 +22,16 @@
             <div class="col-lg-4 col-md-6" style="margin-bottom:30px;" v-for="(room, index) in rooms" :key="index">
                 <div class="card">
                     
-                    <img :src="room.image" class="card-img-top" alt="">
+                    <img :src="'/images/hotel/'+room.image" class="card-img-top" alt="" style="max-height:150px">
                     <div class="card-body">
-                        <h5 class="card-title">{{ room.hotel.name }}</h5>
-                        <div class="card-text">
-
+                      <div class="badge badge-danger details_sub" style="font-size:inherit">${{ room.type.cost.price }}/Night</div><br/>
+                        <h5 class="card-title" style="margin-bottom:0px">
+                          {{ room.hotel.name }}
+                        </h5>
+                        <div class="card-text" style="margin-bottom:10px">
+                          {{ room.hotel.address }}
                         </div>
-                        <router-link tag="button" :to="{ name: 'room', params: { roomId: room.id }}" class="btn btn-primary btn-block" >{{ room.name }}</router-link>
+                        <router-link tag="button" :to="{ name: 'room', params: { roomId: room.id }}" class="btn btn-primary btn-block" >Choose Room</router-link>
                     </div>            
                     
                 </div>

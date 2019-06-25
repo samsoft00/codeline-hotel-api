@@ -8,7 +8,7 @@
           <div class="container">
             <div class="row">
               <div class="col">
-                <div class="home_content text-center">
+                <div class="home_content text-center" style="margin-top:100px">
                   <div class="home_title">Find Hotel Near You</div>
                   <div class="booking_form_container">
                     <form role="form" v-on:submit.prevent="handleSearchSubmit()">
@@ -56,7 +56,7 @@
           <div class="col-lg-4 col-md-6" style="margin-bottom:30px;" v-for="(hotel, index) in hotels.data" :key="index">
             <div class="card">
             
-              <img :src="hotel.image" class="card-img-top" alt="">
+              <img :src="'/images/hotel/'+hotel.image" class="card-img-top" alt="" style="max-height:150px">
               <div class="card-body">
                 <h5 class="card-title">{{ hotel.name }}</h5>
                 <p class="card-text">Some quick example text to build on the card title.</p>

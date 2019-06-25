@@ -29,7 +29,7 @@ class RoomController extends ApiBaseController
         ];
 
         //type, start_date, end_date
-        $availableRooms = Room::with(['type', 'capacity', 'hotel'])->where(function($query) use ($searchArray) {
+        $availableRooms = Room::with(['type.cost', 'capacity', 'hotel'])->where(function($query) use ($searchArray) {
             
             //check for types
             $query->whereHas('type', function($q) use ($searchArray) {
@@ -70,7 +70,7 @@ class RoomController extends ApiBaseController
      */
     public function show($id)
     {
-        $room = Room::with(['type', 'capacity', 'hotel'])->find($id);
+        $room = Room::with(['type', 'type.cost', 'capacity', 'hotel'])->find($id);
         if($room == null){
             return $this->setStatusCode(404)->respond('Resources not found!');
         }

@@ -15,7 +15,7 @@ class HotelsController extends ApiBaseController
      */
     public function index()
     {
-        $hotel = Hotel::with(['rooms.capacity', 'rooms.type'])->simplePaginate(10);
+        $hotel = Hotel::with(['rooms.capacity', 'rooms.type.cost'])->simplePaginate(10);
         return $this->respond($hotel); 
     }
 
@@ -48,7 +48,7 @@ class HotelsController extends ApiBaseController
      */
     public function show($id)
     {
-        $hotel = Hotel::find($id)->with(['rooms.capacity', 'rooms.type'])->first();
+        $hotel = Hotel::find($id)->with(['rooms.capacity', 'rooms.type.cost'])->first();
         if(!$hotel){
             return $this->setStatusCode(404)->respond('Resource not found!');
         }

@@ -7,6 +7,7 @@ import Search from '@/js/components/Search';
 import Hotel from '@/js/components/Hotel';
 import Room from '@/js/components/Room';
 import Booking from '@/js/components/Booking';
+import Register from '@/js/components/Register';
 
 Vue.use(VueRouter);
 //meta: { requiresAuth: true }
@@ -21,8 +22,13 @@ const router = new VueRouter({
         },
         {
             path: '/auth',
-            name: 'Authenticate',
+            name: 'auth',
             component: Auth
+        },
+        {
+            path: '/register',
+            name: 'register',
+            component: Register            
         },
         {
             path: '/room/search',
@@ -40,7 +46,7 @@ const router = new VueRouter({
             component: Room
         },
         {
-            path: '/booking/:roomId',
+            path: '/room/:roomId/booking',
             name: 'booking',
             component: Booking,
             meta: { requiresAuth: true }
@@ -51,10 +57,11 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
     if(to.meta.requiresAuth){
         const user = JSON.parse(window.localStorage.getItem('user'));
+        console.log(user);
         if(user && user.access_token){
             next();
         }else{
-            next({name: 'home'})
+            next({name: 'auth'})
         }
     }
 

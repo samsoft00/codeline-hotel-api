@@ -8,14 +8,11 @@
                 <div class="ml-auto d-flex flex-row align-items-center justify-content-start">
                     <nav class="main_nav">
                         <ul class="d-flex flex-row align-items-start justify-content-start">
-                            <li class="active"><a href="index.html">Home</a></li>
-                            <li><a href="about.html">About us</a></li>
-                            <li><a href="#">Rooms</a></li>
-                            <li><a href="blog.html">Blog</a></li>
-                            <li><a href="contact.html">Contact</a></li>
+                            <li class="active"><router-link tag="a" to="/">Home</router-link></li>
+                            <li><router-link tag="a" to="/">About Us</router-link></li>
+                            <li><router-link tag="a" to="/">Rooms</router-link></li>
                         </ul>
                     </nav>
-                    <div class="book_button"><a href="booking.html">Book Online</a></div>
                     <div class="header_phone d-flex flex-row align-items-center justify-content-center">
                         <img src="images/phone.png" alt="">
                         <span>0183-12345678</span>
