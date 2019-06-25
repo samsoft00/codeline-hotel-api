@@ -14,6 +14,7 @@ global.$ = global.jQuery = require('jquery');
 import '@/theme/plugins/scrollmagic/ScrollMagic.min.js';
 import '@/theme/plugins/jquery-datepicker/jquery-ui.js';
 import '@/theme/plugins/colorbox/jquery.colorbox-min.js';
+import ValidationError from '@/js/components/ValidationErrors';
 import '@/theme/js/custom.js';
 
 import Toastr from 'vue-toastr';
@@ -26,6 +27,7 @@ import Routes from '@/js/routes.js';
 import App from '@/js/views/App';
 
 Vue.use(Toastr, { /* options */ });
+Vue.component("ValidationErrors", ValidationError);
 
 const app = new Vue({
     el: '#app',

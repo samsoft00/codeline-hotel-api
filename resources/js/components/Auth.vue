@@ -43,7 +43,7 @@
                                 <button type="submit" class="btn btn-lg btn-success btn-block">Sign In</button>
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-6">
-                                <router-link tag="a" to="register" class="btn btn-lg btn-primary btn-block">Register</router-link>
+                                <router-link tag="a" :to="{ name: 'register', query: { roomId: this.$route.query.roomId }}" class="btn btn-lg btn-primary btn-block">Register</router-link>
                             </div>
                         </div>
                     </fieldset>

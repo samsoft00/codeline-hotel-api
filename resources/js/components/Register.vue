@@ -39,10 +39,10 @@
                         <hr class="colorgraph">
                         <div class="row">
                             <div class="col-xs-6 col-sm-6 col-md-6">
-                                <button type="submit" class="btn btn-lg btn-success btn-block">Sign In</button>
+                                <button type="submit" class="btn btn-lg btn-success btn-block">Register</button>
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-6">
-                                <router-link tag="a" to="register" class="btn btn-lg btn-primary btn-block">Register</router-link>
+                                <router-link tag="a" to="auth" class="btn btn-lg btn-primary btn-block">Sign In</router-link>
                             </div>
                         </div>
                     </fieldset>
@@ -64,7 +64,7 @@
                 email: '',
                 password: '',
                 confirmpassword: '',
-                validationErrors: ''
+                validationErrors: null
             }
         },
         methods: {
@@ -72,7 +72,7 @@
                 let payload = {
                     email : this.email,
                     password: this.password,
-                    'confirm-password': this.confirmpassword
+                    'password_confirmation': this.confirmpassword
                 }
 
                 console.log(payload);
@@ -81,10 +81,13 @@
                      .then(payload => {
                          console.log(payload);
                          if(payload.status === 200){
-                            //  user.access_token = payload.data.access_token;
-                            //  user.refresh_token = payload.data.refresh_token;
-                            //  window.localStorage.setItem('user', JSON.stringify(user));
-                            //  this.$router.push({name: 'home'});//temporary
+                             user.access_token = payload.data.access_token;
+                             window.localStorage.setItem('user', JSON.stringify(user));
+                             if(this.$route.query.roomId){
+                                 this.$router.push({name: 'booking', param: { roomId: this.$route.query.roomId } })
+                             }else{
+                                this.$router.push({name: 'home'});//temporary
+                             }
                          }
                      })
                      .catch(error => {

@@ -61,7 +61,7 @@ router.beforeEach((to, from, next) => {
         if(user && user.access_token){
             next();
         }else{
-            next({name: 'auth'})
+            next({name: 'auth', query: {roomId: to.params.roomId}});
         }
     }
 
