@@ -20,6 +20,39 @@ Route::group([
 ], function(){
     Route::get('', function(){ return 'we are here'; });
     Route::get('login', function(){ return 'we are here to login'; });
+
+    /**
+     * Hotel Details
+     * 1. ability to retrieve hotel details
+     * 2. ability to edit hotel details
+     */
+    Route::get('hotel', 'HotelController@index');
+    Route::put('hotel', 'HotelController@edit');
+
+    /**
+     * Room Manager
+     * crud actions for room manager
+     */
+    Route::resource('room-manager', 'RoomManagerController');
+
+    /**
+     * Room Type Manager
+     * All required fields should be validated 
+     */
+    Route::resource('room-type-manager', 'RoomTypeManagerController');
+
+    /**
+     * Price List Manager
+     * All required fields should be validated
+     */
+    Route::resource('price-list-manager', 'PriceListManagerController');
+
+    /**
+     * Booking Manager
+     * All required fields should be validated
+     */
+    Route::resource('booking-manager', 'PriceListManagerController');
+
 });
 
 /**

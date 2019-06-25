@@ -25,8 +25,8 @@ class DatabaseSeeder extends Seeder
 
         factory(User::class, 10)->create();
         factory(Customer::class, 20)->create();
-        factory(Hotel::class, 30)->create();
-        factory(Room::class, 100)->create();
+        factory(Hotel::class, 1)->create();
+        factory(Room::class, 10)->create();
         factory(Booking::class, 20)->create();        
     }
 }
