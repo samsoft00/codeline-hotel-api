@@ -47,6 +47,9 @@ body
 	background: #FFFFFF;
 	color: #a5a5a5;
 }
+.page-top-margin{
+	margin-top: 150px;
+}
 div
 {
 	display: block;
@@ -628,6 +631,12 @@ section
 	font-weight: 600;
 	color: #ffffff;
 	line-height: 1.2;
+}
+.home_subtitle{
+    font-size: 40px;
+    font-weight: 600;
+    color: #ffffff;
+    /* line-height: 1.2;	 */
 }
 .booking_form_container
 {

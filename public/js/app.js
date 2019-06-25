@@ -2116,7 +2116,98 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      room: {
+        name: '',
+        capacity: {
+          name: '',
+          id: ''
+        },
+        type: {
+          type: '',
+          id: ''
+        },
+        hotel: {
+          name: ''
+        }
+      }
+    };
+  },
+  methods: {
+    fetchRoomById: function fetchRoomById() {
+      var _this = this;
+
+      var id = this.$route.params.roomId;
+      axios.get("/api/room/".concat(id)).then(function (response) {
+        return _this.room = response.data;
+      })["catch"](function (error) {
+        return console.log(error);
+      });
+    },
+    getHomeBackground: function getHomeBackground() {
+      return "background-image:url(".concat(this.room.hotel.image, ")");
+    },
+    getRoomBackground: function getRoomBackground() {
+      return "background-image:url(".concat(this.room.image, ")");
+    }
+  },
+  mounted: function mounted() {
+    this.fetchRoomById();
+    console.log(this.room);
+  },
+  created: function created() {}
+});
 
 /***/ }),
 
@@ -58607,18 +58698,92 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row" })
+  return _c("div", [
+    _c("div", { staticClass: "home" }, [
+      _c("div", {
+        staticClass: "background_image",
+        style: _vm.getHomeBackground()
+      }),
+      _vm._v(" "),
+      _c("div", { staticClass: "home_container" }, [
+        _c("div", { staticClass: "container" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col" }, [
+              _c(
+                "div",
+                { staticClass: "home_content text-center page-top-margin" },
+                [
+                  _c("div", { staticClass: "home_title" }, [
+                    _vm._v(_vm._s(_vm.room.hotel.name))
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "home_subtitle" }, [
+                    _vm._v(_vm._s(_vm.room.hotel.address))
+                  ])
+                ]
+              )
+            ])
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "details" }, [
+      _c("div", { staticClass: "container" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-xl-7 col-lg-6" }, [
+            _c("div", { staticClass: "details_image" }, [
+              _c("div", {
+                staticClass: "background_image",
+                style: _vm.getRoomBackground()
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-xl-5 col-lg-6" }, [
+            _c("div", { staticClass: "details_content" }, [
+              _c("div", { staticClass: "details_title" }, [
+                _vm._v(
+                  _vm._s(_vm.room.capacity.name) +
+                    " Room (" +
+                    _vm._s(_vm.room.name) +
+                    ")"
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "details_list" }, [
+                _c("ul", [
+                  _c("li", [_vm._v("Room Name: " + _vm._s(_vm.room.name))]),
+                  _vm._v(" "),
+                  _c("li", [
+                    _vm._v(
+                      "Room Capacity: " +
+                        _vm._s(_vm.room.capacity.name + " Room")
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("li", [_vm._v("Room Type: " + _vm._s(_vm.room.type.type))])
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "book_now_button" },
+                [
+                  _c("router-link", { attrs: { to: "", tag: "a" } }, [
+                    _vm._v("Book Now")
+                  ])
+                ],
+                1
+              )
+            ])
+          ])
+        ])
+      ])
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
