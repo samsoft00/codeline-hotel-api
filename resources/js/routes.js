@@ -42,7 +42,8 @@ const router = new VueRouter({
         {
             path: '/booking/:roomId',
             name: 'booking',
-            component: Booking
+            component: Booking,
+            meta: { requiresAuth: true }
         }                  
     ]
 });
