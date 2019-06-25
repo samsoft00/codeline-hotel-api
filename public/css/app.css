@@ -5246,6 +5246,11 @@ input[type=number]::-webkit-outer-spin-button
 	font-weight: 600;
 	color: #393939;
 }
+.details_sub{
+    font-size: 26px;
+    font-weight: 600;
+    color: #393939;	
+}
 .details_list
 {
 	margin-top: 30px;

@@ -13,9 +13,13 @@ class CreatePricesTable extends Migration
      */
     public function up()
     {
-        Schema::create('prices', function (Blueprint $table) {
+        Schema::create('price', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('room_type_id')->unique()->unsigned();
+            $table->decimal('price',9,2);
             $table->timestamps();
+
+            $table->foreign('room_type_id')->references('id')->on('room_type');
         });
     }
 
@@ -26,6 +30,6 @@ class CreatePricesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('prices');
+        Schema::dropIfExists('price');
     }
 }

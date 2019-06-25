@@ -34,6 +34,7 @@
                     <div class="col-xl-5 col-lg-6">
                         <div class="details_content">
                             <div class="details_title">{{ room.capacity.name }} Room ({{ room.name }})</div>
+                            <div class="badge badge-danger details_sub" style="font-size:inherit">$100/Night</div>
                             <div class="details_list">
                                 <ul>
                                     <li>Room Name: {{ room.name }}</li>
@@ -42,7 +43,7 @@
                                 </ul>
                             </div>
                             <div class="book_now_button">
-                                <router-link to="" tag="a">Book Now</router-link>
+                                <router-link :to="{ name: 'booking', params: { roomId: room.id }}" tag="a">Book Now</router-link>
                             </div>
                         </div>
                     </div>

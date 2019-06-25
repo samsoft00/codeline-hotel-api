@@ -27,6 +27,6 @@ class CreateRoomTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('room_types');
+        Schema::dropIfExists('room_type');
     }
 }

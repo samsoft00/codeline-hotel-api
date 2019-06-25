@@ -9,6 +9,7 @@ use App\Customer;
 use App\RoomType;
 use App\Room;
 use App\RoomCapacity;
+use App\Price;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,6 +54,17 @@ $factory->define(Hotel::class, function(Faker $faker){
         'Parker New York',
         'Skyline Hotel',
         'Mondrian Park Avenue'
+    ];
+
+    $hotel_image = [
+        'premier_room_red_at_hotel.png',
+        'f3e29c605a81097cb065165ef57c17a0.png',
+        'sun-star-room-2-800x560.png',
+        'home-carouselimg-4.png',
+        'main-canopy-fireplace_1.jpg',
+        'luxury-roomaw05-1954a49631c9073.png',
+        '63b098ea_z.jpg',
+        ''
     ];
 
     return [
