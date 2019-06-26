@@ -63,7 +63,7 @@ class BookRoomController extends ApiBaseController
      */
     public function show(Booking $booking)
     {
-        return $booking;
+        return $this.respond($booking);
     }
 
     /**
@@ -75,7 +75,7 @@ class BookRoomController extends ApiBaseController
      */
     public function update(Request $request, Booking $booking)
     {
-        //
+        
     }
 
     /**
@@ -86,6 +86,7 @@ class BookRoomController extends ApiBaseController
      */
     public function destroy(Booking $booking)
     {
-        //
+        $booking->delete();
+        return $this->respond(['message' => 'Resources deleted successfully!']);
     }
 }
