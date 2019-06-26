@@ -45,7 +45,7 @@ Route::group([
      * Price List Manager
      * All required fields should be validated
      */
-    // Route::resource('price-list-manager', 'PriceListManagerController');
+    Route::resource('price-list-manager', 'PriceListManagerController');
 
     /**
      * Booking Manager
