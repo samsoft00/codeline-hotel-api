@@ -40,7 +40,7 @@
                         </li>
                         <h3 class="menu-title">Menu</h3><!-- /.menu-title -->
                         <li class="">
-                            <a href="{{ route('hotel-manager.create') }}"> <i class="menu-icon fa fa-laptop"></i>Manage Hotel</a>                          
+                            <a href="{{ route('hotel-manager.index') }}"> <i class="menu-icon fa fa-laptop"></i>Manage Hotel</a>                          
                         </li>                        
                         <li class="menu-item-has-children dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>Room Manager</a>

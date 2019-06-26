@@ -33,7 +33,7 @@ Route::group([
          * 2. ability to edit hotel details
          */
 
-        // Route::resource('hotel-manager', 'HotelManagerController');
+        Route::resource('hotel-manager', 'HotelManagerController');
 
         /**
          * Room Manager

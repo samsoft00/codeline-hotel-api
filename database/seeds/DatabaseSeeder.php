@@ -23,10 +23,10 @@ class DatabaseSeeder extends Seeder
             PriceSeeder::class
         ]);        
 
-        factory(User::class, 10)->create();
-        factory(Customer::class, 20)->create();
+        factory(User::class, 5)->create();
+        factory(Customer::class, 5)->create();
         factory(Hotel::class, 1)->create();
         factory(Room::class, 10)->create();
-        factory(Booking::class, 20)->create();        
+        factory(Booking::class, 10)->create();        
     }
 }

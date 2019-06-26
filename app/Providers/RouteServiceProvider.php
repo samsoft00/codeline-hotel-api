@@ -6,6 +6,7 @@ use App\Room;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use App\Booking;
+use App\Hotel;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -27,7 +28,11 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::bind('room-manager', function ($value) {
             return Room::with(['hotel', 'capacity', 'type'])->where('id', $value)->first() ?? abort(404);
-        });
+        });//hotel-manager
+
+        Route::bind('hotel-manager', function ($value) {
+            return Hotel::with(['rooms'])->where('id', $value)->first() ?? abort(404);
+        });        
 
         Route::bind('book-room', function ($value) {
             return Booking::with(['room.type.cost', 'room.capacity', 'customer'])->where('id', $value)->first() ?? abort(404);

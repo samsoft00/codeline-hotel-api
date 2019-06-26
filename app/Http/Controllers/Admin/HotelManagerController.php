@@ -15,7 +15,8 @@ class HotelManagerController extends Controller
      */
     public function index()
     {
-        //
+        $hotels = Hotel::all();
+        return view('hotel-manager.index', compact('hotels'));
     }
 
     /**
@@ -47,7 +48,7 @@ class HotelManagerController extends Controller
      */
     public function show(Hotel $hotel)
     {
-        //
+        return view('hotel-manager.show', compact('hotel'));
     }
 
     /**
@@ -58,7 +59,7 @@ class HotelManagerController extends Controller
      */
     public function edit(Hotel $hotel)
     {
-        //
+        return view('hotel-manager.edit', compact('hotel'));
     }
 
     /**
@@ -70,7 +71,37 @@ class HotelManagerController extends Controller
      */
     public function update(Request $request, Hotel $hotel)
     {
-        //
+        $request->validate([
+            'name'  =>  'required',
+            'address'   =>  'required',
+            'city'      =>  'required',
+            'state'     =>  'required',
+            'country'   =>  'required',
+            'zipcode'   =>  'required',
+            'phone_number'  =>  'required',
+            'email'     =>  'required'
+        ]);
+
+        $imageName = null;
+
+        if($request->has('image')){
+            $imageName = time().'.'.request()->image->getClientOriginalExtension();
+            request()->image->move(public_path('images/hotel'), $imageName);
+        }   
+
+        $data = $request->input();
+        $hotel->update([
+            'name'  =>      $data['name'],
+            'address'   =>  $data['address'],
+            'city'      =>  $data['city'],
+            'state'     =>  $data['state'],
+            'country'   =>  $data['country'],
+            'zipcode'   =>  $data['zipcode'],
+            'phone_number'  =>  $data['phone_number'],
+            'email'     =>  $data['email'],
+            'image'     =>  $imageName !== null ? $imageName : $hotel->image
+        ]);
+        return redirect()->route('hotel-manager.index')->with('success','You have successfully update hotel.'); 
     }
 
     /**
@@ -81,6 +112,7 @@ class HotelManagerController extends Controller
      */
     public function destroy(Hotel $hotel)
     {
-        //
+        $hotel->delete();
+        return redirect()->back()->with('success', 'Hotel has been deleted Successfully');        
     }
 }
