@@ -13,7 +13,8 @@ CHML takes the pain out of Hoteliers by easing their Booking process and Custome
 
 ##CHML Homepage
 <div align="center">
-    <img src="public/images/hotel/home-page.png">
+    <img src="public/images/hotel/home-page.PNG">
+    <img src="http://gitlab.gitesoft.com/test-assignments-v2/22107-test-assignment-for-laravel-_-frontend/blob/master/public/images/hotel/home-page.PNG">
 </div>
 
 ## CHML Setup
