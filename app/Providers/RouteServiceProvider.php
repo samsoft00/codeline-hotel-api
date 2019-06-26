@@ -47,7 +47,11 @@ class RouteServiceProvider extends ServiceProvider
         Route::bind('book-room', function ($value) {
             return Booking::with(['room.type.cost', 'room.capacity', 'customer'])->where('id', $value)->first() ?? abort(404);
         });
-        
+
+        Route::bind('booking-manager', function ($value) {
+            return Booking::with(['room.type.cost', 'room.capacity', 'customer'])->where('id', $value)->first() ?? abort(404);
+        });
+
         parent::boot();
     }
 

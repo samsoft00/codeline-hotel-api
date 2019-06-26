@@ -11,12 +11,12 @@ CHML takes the pain out of Hoteliers by easing their Booking process and Custome
 - [Price List Manager].
 - [Booking Manager].
 
-##CHML Homepage
+## CHML Homepage
 <div align="center">
     <img src="public/images/hotel/home-page.PNG">
 </div>
 
-##CHML Backend Page
+## CHML Backend Page
 <div align="center">
     <img src="public/images/hotel/backend-page.PNG">
 </div>

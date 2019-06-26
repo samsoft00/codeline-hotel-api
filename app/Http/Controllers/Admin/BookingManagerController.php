@@ -18,6 +18,7 @@ class BookingManagerController extends Controller
     public function index()
     {
         $bookings = Booking::with(['room', 'customer'])->get();
+        // dd($bookings);
         return view('booking-manager.index',compact('bookings'));
     }
 
