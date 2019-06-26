@@ -16,7 +16,7 @@ class PriceListManagerController extends Controller
      */
     public function index()
     {
-        $price = Price::with('type')->get();
+        $prices = Price::with('type')->get();
         return view('price-list-manager.index',compact('prices'));
     }
 
@@ -41,7 +41,7 @@ class PriceListManagerController extends Controller
     {
         $request->validate([
             'price'  =>  'required',
-            'room_type_id'      =>  'required',
+            'room_type_id'      =>  'required|unique:price',
         ]);
 
         Price::create([

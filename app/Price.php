@@ -12,7 +12,11 @@ class Price extends Model
         'created_at', 'updated_at', 'room_type_id'
     ];    
 
+    protected $fillable = [
+        'room_type_id', 'price'
+    ];
+
     public function type(){
-        return $this->belongsTo(RoomType::class);
+        return $this->belongsTo(RoomType::class, 'room_type_id', 'id');
     }
 }
