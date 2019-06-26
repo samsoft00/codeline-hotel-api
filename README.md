@@ -13,7 +13,7 @@ CHML takes the pain out of Hoteliers by easing their Booking process and Custome
 
 ##CHML Homepage
 <div align="center">
-    <img src="/images/hotel/home-page.png">
+    <img src="/public/images/hotel/home-page.png">
 </div>
 
 ## CHML Setup
