@@ -38,28 +38,35 @@
                         <li class="active">
                             <a href="/"> <i class="menu-icon fa fa-dashboard"></i>Codeline Hotel </a>
                         </li>
-                        <h3 class="menu-title">UI elements</h3><!-- /.menu-title -->
+                        <h3 class="menu-title">Menu</h3><!-- /.menu-title -->
                         <li class="menu-item-has-children dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>Room Manager</a>
                             <ul class="sub-menu children dropdown-menu">
                                 <li><i class="fa fa-table"></i><a href="/admin/room-manager/create">Create Rooms</a></li>
-                                <li><i class="fa fa-table"></i><a href="/admin/room-manager">Rooms List</a></li>
+                                <li><i class="fa fa-table"></i><a href="/admin/room-manager">manage Rooms</a></li>
                             </ul>                           
                         </li>
                         <li class="menu-item-has-children dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Tables</a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Room Type Manager</a>
                             <ul class="sub-menu children dropdown-menu">
-                                <li><i class="fa fa-table"></i><a href="tables-basic.html">Basic Table</a></li>
-                                <li><i class="fa fa-table"></i><a href="tables-data.html">Data Table</a></li>
+                                <li><i class="fa fa-table"></i><a href="{{ route('room-type-manager.create') }}">Create Room Type</a></li>
+                                <li><i class="fa fa-table"></i><a href="{{ route('room-type-manager.index') }}">Manage Room Type</a></li>
                             </ul>
                         </li>
                         <li class="menu-item-has-children dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-th"></i>Forms</a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-th"></i>Price List Manager</a>
                             <ul class="sub-menu children dropdown-menu">
-                                <li><i class="menu-icon fa fa-th"></i><a href="forms-basic.html">Basic Form</a></li>
-                                <li><i class="menu-icon fa fa-th"></i><a href="forms-advanced.html">Advanced Form</a></li>
+                                <li><i class="menu-icon fa fa-th"></i><a href="{{ route('price-list-manager.create') }}">Create Price</a></li>
+                                <li><i class="menu-icon fa fa-th"></i><a href="{{ route('price-list-manager.index') }}">Manage Price</a></li>
                             </ul>
                         </li>
+                        <li class="menu-item-has-children dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-th"></i>Booking Manager</a>
+                            <ul class="sub-menu children dropdown-menu">
+                                <li><i class="menu-icon fa fa-th"></i><a href="{{ route('booking-manager.create') }}">Create Booking</a></li>
+                                <li><i class="menu-icon fa fa-th"></i><a href="{{ route('booking-manager.index') }}">Manage Booking</a></li>
+                            </ul>
+                        </li>                        
                     </ul>
                 </div><!-- /.navbar-collapse -->
             </nav>
