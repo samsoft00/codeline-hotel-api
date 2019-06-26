@@ -60,7 +60,7 @@
               <div class="card-body">
                 <h5 class="card-title">{{ hotel.name }}</h5>
                 <p class="card-text">Some quick example text to build on the card title.</p>
-                <router-link tag="button" :to="{ name: 'hotel', params: { hotelId: hotel.id }}" class="btn btn-primary btn-block" >{{ hotel.name }}</router-link>
+                <a tag="button" href="javascript:;" class="btn btn-warning btn-block" >{{ hotel.name }}</a>
               </div>            
 
             </div>
