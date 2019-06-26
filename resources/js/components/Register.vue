@@ -42,7 +42,7 @@
                                 <button type="submit" class="btn btn-lg btn-success btn-block">Register</button>
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-6">
-                                <router-link tag="a" to="auth" class="btn btn-lg btn-primary btn-block">Sign In</router-link>
+                                <router-link tag="a" :to="{ name: 'auth', query: { roomId: this.$route.query.roomId }}" class="btn btn-lg btn-primary btn-block">Sign In</router-link>
                             </div>
                         </div>
                     </fieldset>
@@ -64,27 +64,35 @@
                 email: '',
                 password: '',
                 confirmpassword: '',
-                validationErrors: null
+                validationErrors: null,
+                routeQueryId:""
             }
         },
         methods: {
             handleRegisterFormSubmit(){
-                let payload = {
+                // console.log(this.routeQueryId);
+                // if(this.routeQueryId !== ""){
+                //     this.$router.push({name: 'booking', params: { roomId: this.routeQueryId } });
+                // }else{
+                //     return;
+                // }
+
+                let data = {
                     email : this.email,
                     password: this.password,
                     'password_confirmation': this.confirmpassword
                 }
 
-                console.log(payload);
-
-                axios.post('/api/auth/register', payload)
+                console.log(data);
+                let user = {};
+                axios.post('/api/auth/register', data)
                      .then(payload => {
                          console.log(payload);
                          if(payload.status === 200){
                              user.access_token = payload.data.access_token;
                              window.localStorage.setItem('user', JSON.stringify(user));
-                             if(this.$route.query.roomId){
-                                 this.$router.push({name: 'booking', param: { roomId: this.$route.query.roomId } })
+                             if(this.routeQueryId !== ""){
+                                 this.$router.push({name: 'booking', params: { roomId: this.routeQueryId } });
                              }else{
                                 this.$router.push({name: 'home'});//temporary
                              }
@@ -98,6 +106,9 @@
                          }
                      });//
             }
+        },
+        mounted(){
+            this.routeQueryId = this.$route.query.roomId;
         }
     }
 </script>

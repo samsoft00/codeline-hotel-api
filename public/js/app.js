@@ -2215,31 +2215,39 @@ __webpack_require__.r(__webpack_exports__);
       email: '',
       password: '',
       confirmpassword: '',
-      validationErrors: null
+      validationErrors: null,
+      routeQueryId: ""
     };
   },
   methods: {
     handleRegisterFormSubmit: function handleRegisterFormSubmit() {
       var _this = this;
 
-      var payload = {
+      // console.log(this.routeQueryId);
+      // if(this.routeQueryId !== ""){
+      //     this.$router.push({name: 'booking', params: { roomId: this.routeQueryId } });
+      // }else{
+      //     return;
+      // }
+      var data = {
         email: this.email,
         password: this.password,
         'password_confirmation': this.confirmpassword
       };
-      console.log(payload);
-      axios.post('/api/auth/register', payload).then(function (payload) {
+      console.log(data);
+      var user = {};
+      axios.post('/api/auth/register', data).then(function (payload) {
         console.log(payload);
 
         if (payload.status === 200) {
           user.access_token = payload.data.access_token;
           window.localStorage.setItem('user', JSON.stringify(user));
 
-          if (_this.$route.query.roomId) {
+          if (_this.routeQueryId !== "") {
             _this.$router.push({
               name: 'booking',
-              param: {
-                roomId: _this.$route.query.roomId
+              params: {
+                roomId: _this.routeQueryId
               }
             });
           } else {
@@ -2257,6 +2265,9 @@ __webpack_require__.r(__webpack_exports__);
         }
       }); //
     }
+  },
+  mounted: function mounted() {
+    this.routeQueryId = this.$route.query.roomId;
   }
 });
 
@@ -59160,7 +59171,13 @@ var render = function() {
                           "router-link",
                           {
                             staticClass: "btn btn-lg btn-primary btn-block",
-                            attrs: { tag: "a", to: "auth" }
+                            attrs: {
+                              tag: "a",
+                              to: {
+                                name: "auth",
+                                query: { roomId: this.$route.query.roomId }
+                              }
+                            }
                           },
                           [_vm._v("Sign In")]
                         )
