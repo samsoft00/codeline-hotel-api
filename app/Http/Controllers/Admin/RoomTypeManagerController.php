@@ -15,7 +15,8 @@ class RoomTypeManagerController extends Controller
      */
     public function index()
     {
-        //
+        $roomType = Room::all();
+        return view('room-type-manager.index',compact('roomType'));
     }
 
     /**
@@ -25,7 +26,7 @@ class RoomTypeManagerController extends Controller
      */
     public function create()
     {
-        //
+        return view('room-type-manager.create');
     }
 
     /**
@@ -36,7 +37,15 @@ class RoomTypeManagerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'type'      =>  'required',
+        ]);
+
+        RoomType::create([
+            'type'      =>  $request->input('type')
+        ]);
+
+        return redirect()->route('room-type-manager.index')->with('success','You have successfully add Room Type.');
     }
 
     /**
@@ -47,7 +56,7 @@ class RoomTypeManagerController extends Controller
      */
     public function show(RoomType $roomType)
     {
-        //
+        return view('room-type-manager.show', compact('roomType'));
     }
 
     /**
@@ -58,7 +67,7 @@ class RoomTypeManagerController extends Controller
      */
     public function edit(RoomType $roomType)
     {
-        //
+        return view('room-manager.edit', compact('roomType'));
     }
 
     /**
@@ -70,7 +79,15 @@ class RoomTypeManagerController extends Controller
      */
     public function update(Request $request, RoomType $roomType)
     {
-        //
+        $request->validate([
+            'type'      =>  'required',
+        ]);
+
+        $roomType->update([
+            'type'      =>  $request->input('type')
+        ]);
+
+        return redirect()->route('room-type-manager.index')->with('success','You have successfully update Room Type.');
     }
 
     /**
@@ -81,6 +98,7 @@ class RoomTypeManagerController extends Controller
      */
     public function destroy(RoomType $roomType)
     {
-        //
+        $roomType->delete();
+        return redirect()->back()->with('success', 'Room Type has been deleted Successfully');
     }
 }

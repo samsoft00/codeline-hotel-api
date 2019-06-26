@@ -39,7 +39,7 @@ Route::group([
      * Room Type Manager
      * All required fields should be validated 
      */
-    // Route::resource('room-type-manager', 'RoomTypeManagerController');
+    Route::resource('room-type-manager', 'RoomTypeManagerController');
 
     /**
      * Price List Manager
