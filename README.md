@@ -35,7 +35,7 @@ MIX_CLIENT_SECRET=eDwaB2ZpgU62Wp21o3RB8I5yL6hZzC9FR2qM1TrK
 
 11. Run ```npm run dev ```
 12. Finally, run the following command in your project directory to boot up the server.
-    ``` php artisan serve ```
+    ` php artisan serve `
 then go to 
     http://localhost:8000 => Home Page
     http://localhost:8000/admin => Administrator Page
