@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Booking;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Room;
+use App\Customer;
 
 class BookingManagerController extends Controller
 {
@@ -15,7 +17,8 @@ class BookingManagerController extends Controller
      */
     public function index()
     {
-        //
+        $bookings = Booking::with(['room', 'customer'])->get();
+        return view('booking-manager.index',compact('bookings'));
     }
 
     /**
@@ -25,7 +28,9 @@ class BookingManagerController extends Controller
      */
     public function create()
     {
-        //
+        $rooms = Room::all();
+        $customers = Customer::all();
+        return view('booking-manager.create', compact(['rooms', 'customers']));
     }
 
     /**
@@ -36,7 +41,22 @@ class BookingManagerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'room_id'       =>  'required',
+            'date_start'    =>  'required',
+            'date_end'      =>  'required',
+            'customer_id'   =>  'required'
+        ]);
+
+        $data = $request->input();
+        Booking::create([
+            'room_id'       =>  $data['room_id'],
+            'date_start'    =>  $data['date_start'],
+            'date_end'      =>  $data['date_end'],
+            'customer_id'   =>  $data['customer_id']
+        ]);
+
+        return redirect()->route('booking-manager.index')->with('success','You have successfully add Booking.'); 
     }
 
     /**
@@ -47,7 +67,7 @@ class BookingManagerController extends Controller
      */
     public function show(Booking $booking)
     {
-        //
+        return view('booking-manager.show', compact('booking'));
     }
 
     /**
@@ -58,7 +78,9 @@ class BookingManagerController extends Controller
      */
     public function edit(Booking $booking)
     {
-        //
+        $rooms = Room::all();
+        $customers = Customer::all();
+        return view('booking-manager.edit', compact(['booking', 'rooms', 'customers']));
     }
 
     /**
@@ -70,7 +92,22 @@ class BookingManagerController extends Controller
      */
     public function update(Request $request, Booking $booking)
     {
-        //
+        $request->validate([
+            'room_id'       =>  'required',
+            'date_start'    =>  'required',
+            'date_end'      =>  'required',
+            'customer_id'   =>  'required'
+        ]);
+
+        $data = $request->input();
+        $booking->update([
+            'room_id'       =>  $data['room_id'],
+            'date_start'    =>  $data['date_start'],
+            'date_end'      =>  $data['date_end'],
+            'customer_id'   =>  $data['customer_id']
+        ]);
+
+        return redirect()->route('booking-manager.index')->with('success','Room updated successfully');        
     }
 
     /**
@@ -81,6 +118,7 @@ class BookingManagerController extends Controller
      */
     public function destroy(Booking $booking)
     {
-        //
+        $booking->delete();
+        return redirect()->back()->with('success', 'Booking has been deleted Successfully');
     }
 }

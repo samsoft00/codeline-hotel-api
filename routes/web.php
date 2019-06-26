@@ -51,7 +51,7 @@ Route::group([
      * Booking Manager
      * All required fields should be validated
      */
-    // Route::resource('booking-manager', 'PriceListManagerController');
+    Route::resource('booking-manager', 'BookingManagerController');
 
 });
 
