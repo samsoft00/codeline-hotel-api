@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Price;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\RoomType;
 
 class PriceListManagerController extends Controller
 {
@@ -15,7 +16,8 @@ class PriceListManagerController extends Controller
      */
     public function index()
     {
-        //
+        $price = Price::with('type')->get();
+        return view('price-list-manager.index',compact('prices'));
     }
 
     /**
@@ -25,7 +27,8 @@ class PriceListManagerController extends Controller
      */
     public function create()
     {
-        //
+        $types = RoomType::all();
+        return view('price-list-manager.create', compact('types'));
     }
 
     /**
@@ -36,7 +39,17 @@ class PriceListManagerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'price'  =>  'required',
+            'room_type_id'      =>  'required',
+        ]);
+
+        Price::create([
+            'price'  =>  $request->input('price'),
+            'room_type_id' =>  $request->input('room_type_id'),
+        ]);
+
+        return redirect()->route('price-list-manager.index')->with('success','You have successfully add price.');
     }
 
     /**
@@ -47,7 +60,7 @@ class PriceListManagerController extends Controller
      */
     public function show(Price $price)
     {
-        //
+        return view('price-list-manager.show', compact('price'));
     }
 
     /**
@@ -58,7 +71,8 @@ class PriceListManagerController extends Controller
      */
     public function edit(Price $price)
     {
-        //
+        $types = RoomType::all();
+        return view('price-list-manager.edit', compact(['price', 'types']));
     }
 
     /**
@@ -70,7 +84,17 @@ class PriceListManagerController extends Controller
      */
     public function update(Request $request, Price $price)
     {
-        //
+        $request->validate([
+            'price'  =>  'required',
+            'room_type_id'      =>  'required',
+        ]);
+
+        $price->update([
+            'price'  =>  $request->input('price'),
+            'room_type_id' =>  $request->input('room_type_id'),
+        ]);
+
+        return redirect()->route('price-list-manager.index')->with('success','Price updated successfully');        
     }
 
     /**
@@ -81,6 +105,7 @@ class PriceListManagerController extends Controller
      */
     public function destroy(Price $price)
     {
-        //
+        $price->delete();
+        return redirect()->back()->with('success', 'Price has been deleted Successfully');
     }
 }
