@@ -15,7 +15,7 @@ class RoomTypeManagerController extends Controller
      */
     public function index()
     {
-        $roomType = Room::all();
+        $roomType = RoomType::all();
         return view('room-type-manager.index',compact('roomType'));
     }
 
@@ -38,7 +38,7 @@ class RoomTypeManagerController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'type'      =>  'required',
+            'type'      =>  'required|unique:room_type',
         ]);
 
         RoomType::create([
@@ -67,7 +67,7 @@ class RoomTypeManagerController extends Controller
      */
     public function edit(RoomType $roomType)
     {
-        return view('room-manager.edit', compact('roomType'));
+        return view('room-type-manager.edit', compact('roomType'));
     }
 
     /**
@@ -80,7 +80,7 @@ class RoomTypeManagerController extends Controller
     public function update(Request $request, RoomType $roomType)
     {
         $request->validate([
-            'type'      =>  'required',
+            'type'      =>  'required|unique:room_type',
         ]);
 
         $roomType->update([

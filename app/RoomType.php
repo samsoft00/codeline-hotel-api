@@ -10,6 +10,8 @@ class RoomType extends Model
 
     protected $table = 'room_type';
 
+    protected $fillable = ['type'];
+
     public function cost(){
         return $this->hasOne(Price::class, 'room_type_id', 'id');
     }
