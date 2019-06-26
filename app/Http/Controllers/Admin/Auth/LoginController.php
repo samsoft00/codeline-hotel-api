@@ -27,6 +27,8 @@ class LoginController extends Controller
      */
     protected $redirectTo = '/admin';
 
+    protected $redirectAfterLogout = '/admin';
+
     /**
      * Create a new controller instance.
      *

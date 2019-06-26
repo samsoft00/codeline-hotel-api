@@ -39,11 +39,14 @@
                             <a href="/"> <i class="menu-icon fa fa-dashboard"></i>Codeline Hotel </a>
                         </li>
                         <h3 class="menu-title">Menu</h3><!-- /.menu-title -->
+                        <li class="">
+                            <a href="{{ route('hotel-manager.create') }}"> <i class="menu-icon fa fa-laptop"></i>Manage Hotel</a>                          
+                        </li>                        
                         <li class="menu-item-has-children dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>Room Manager</a>
                             <ul class="sub-menu children dropdown-menu">
-                                <li><i class="fa fa-table"></i><a href="/admin/room-manager/create">Create Rooms</a></li>
-                                <li><i class="fa fa-table"></i><a href="/admin/room-manager">manage Rooms</a></li>
+                                <li><i class="fa fa-table"></i><a href="{{ route('room-manager.create') }}">Create Rooms</a></li>
+                                <li><i class="fa fa-table"></i><a href="{{ route('room-manager.index') }}">Manage Rooms</a></li>
                             </ul>                           
                         </li>
                         <li class="menu-item-has-children dropdown">
@@ -108,8 +111,6 @@
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         {{ csrf_field() }}
                                     </form>
-                                        
-                                    {{-- <a class="nav-link" href="#"><i class="fa fa-power-off"></i> Logout</a> --}}
                                 </div>
                             </div>
         
