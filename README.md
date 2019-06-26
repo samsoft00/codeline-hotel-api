@@ -50,4 +50,8 @@ then go to <br/>
     http://localhost:8000 => Home Page <br/>
     http://localhost:8000/admin => Administrator Page <br/>
 
+## Admin Login Credential
+Email: admin@codelinehotel.io
+Password: password
+
 If you've any issue setting this up, will be available to help out.

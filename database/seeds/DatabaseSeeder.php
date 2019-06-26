@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RoomTypeSeeder::class,
             RoomCapacitySeeder::class,
-            PriceSeeder::class
+            PriceSeeder::class,
+            AdminSeeder::class
         ]);        
 
         factory(User::class, 5)->create();
