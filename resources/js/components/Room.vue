@@ -42,8 +42,26 @@
                                     <li>Room Type: {{ room.type.type }}</li>
                                 </ul>
                             </div>
+                            <table class="table table-borderless">
+                                <tr>
+                                <th>Start Date</th>
+                                <td>{{ this.search.date_start }}</td>
+                                </tr>
+                                <tr>
+                                <th>End Date</th>
+                                <td>{{ this.search.date_end }}</td>
+                                </tr>
+                                <tr>
+                                <th>Total Days</th>
+                                <td>{{ this.search.search.days+" Days" }}</td>
+                                </tr>
+                                <tr>
+                                <th>Total Cost</th>
+                                <td>{{ this.search.search.total }}</td>
+                                </tr>
+                            </table>
                             <div class="book_now_button">
-                                <router-link :to="{ name: 'booking', param: { roomId: room.id }}" tag="a">Book Now</router-link>
+                                <a @click="bookRoomNow()" href="javacript:;" tag="a">Book Now</a>
                             </div>
                         </div> 
                     </div>
@@ -70,7 +88,8 @@
                     hotel: {
                         name: ''
                     }
-                }
+                },
+                search:{}
             }
         },
         methods: {
@@ -88,16 +107,44 @@
 
             getRoomBackground(){
                 return `background-image:url(${'/images/hotel/'+this.room.image})`;
+            },
+            fetchSearchInfo(){
+                this.search = JSON.parse(window.localStorage.getItem('search'));
+            },
+            bookRoomNow(){
+              const user = JSON.parse(window.localStorage.getItem('user'));
+              if(user && user.access_token){
+                let data = {
+                    end_date:this.search.date_end,
+                    start_date: this.search.date_start,
+                    room_id: this.search.room_id
+                }
+                axios.post('/api/book-room', data)
+                     .then(response => {
+                        this.$toastr.e("")
+                       //clear storage
+                        window.localStorage.removeItem('search');
+                       this.$router.push({ name: 'booking', params: { bookId: response.data.id }});
+                     })
+                     .catch(error => this.$toastr.e(error.response.data.error_description));
+
+              }else{
+                this.$router.push({ name: 'auth', query: { roomId: roomId }});
+              }                
             }
         },
         mounted(){
             this.fetchRoomById();
-            console.log(this.room);
+            // console.log(this.room);
         },
-        created(){}
+        created(){
+            this.fetchSearchInfo();
+        }
     }
 </script>
 
 <style lang="scss" scoped>
-
+  table th, .table td {
+      padding: 0.3rem;
+  }
 </style>

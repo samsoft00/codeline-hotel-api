@@ -92,7 +92,7 @@
                              user.access_token = payload.data.access_token;
                              window.localStorage.setItem('user', JSON.stringify(user));
                              if(this.routeQueryId !== ""){
-                                 this.$router.push({name: 'booking', params: { roomId: this.routeQueryId } });
+                                 this.$router.push({name: 'room', params: { roomId: this.routeQueryId } });
                              }else{
                                 this.$router.push({name: 'home'});//temporary
                              }

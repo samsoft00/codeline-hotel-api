@@ -83,3 +83,15 @@ Route::group([
 ], function(){
     Route::get('', 'RoomCapacityController@index');
 });
+
+/**
+ * Booking Endpoint
+ */
+Route::group([
+    'namespace'     =>  'Api',
+    'middleware'    =>  'auth:api'
+], function(){
+    Route::apiResources([
+        'book-room' => 'BookRoomController'
+    ]);
+});

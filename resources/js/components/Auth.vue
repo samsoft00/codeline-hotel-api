@@ -64,6 +64,7 @@
             return {
                 email: '',
                 password: '',
+                routeQueryId:"",
                 errors: []
             }
         },
@@ -86,12 +87,20 @@
                              user.access_token = payload.data.access_token;
                              user.refresh_token = payload.data.refresh_token;
                              window.localStorage.setItem('user', JSON.stringify(user));
-                             this.$router.push({name: 'home'});//temporary
+                            //  this.$router.push({name: 'home'});//temporary
+                             if(this.routeQueryId !== ""){
+                                 this.$router.push({name: 'room', params: { roomId: this.routeQueryId } });
+                             }else{
+                                this.$router.push({name: 'home'});//temporary
+                             }                             
                          }
                      })
                      .catch(error => this.$toastr.e(error.response.data.error_description));
             }
-        }
+        },
+        mounted(){
+            this.routeQueryId = this.$route.query.roomId;
+        }        
     }
 </script>
 

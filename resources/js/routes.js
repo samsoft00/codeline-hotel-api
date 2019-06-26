@@ -43,10 +43,11 @@ const router = new VueRouter({
         {
             path: '/room/:roomId',
             name: 'room',
-            component: Room
+            component: Room,
+            meta: { requiresAuth: true }
         },
         {
-            path: '/room/:roomId/booking',
+            path: '/booking/:bookId/',
             name: 'booking',
             component: Booking,
             meta: { requiresAuth: true }
@@ -57,7 +58,6 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
     if(to.meta.requiresAuth){
         const user = JSON.parse(window.localStorage.getItem('user'));
-        console.log(user);
         if(user && user.access_token){
             next();
         }else{

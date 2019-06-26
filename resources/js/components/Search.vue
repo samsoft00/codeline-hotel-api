@@ -26,12 +26,29 @@
                     <div class="card-body">
                       <div class="badge badge-danger details_sub" style="font-size:inherit">${{ room.type.cost.price }}/Night</div><br/>
                         <h5 class="card-title" style="margin-bottom:0px">
-                          {{ room.hotel.name }}
+                          {{ 'Room '+room.name }}
                         </h5>
                         <div class="card-text" style="margin-bottom:10px">
-                          {{ room.hotel.address }}
+                          <table class="table table-borderless">
+                            <tr>
+                              <th>Start Date</th>
+                              <td>{{ search.start_date }}</td>
+                            </tr>
+                            <tr>
+                              <th>End Date</th>
+                              <td>{{ search.end_date }}</td>
+                            </tr>
+                            <tr>
+                              <th>Total Days</th>
+                              <td>{{ search.days+" Days" }}</td>
+                            </tr>
+                            <tr>
+                              <th>Total Cost</th>
+                              <td>{{ total(room.type.cost.price) }}</td>
+                            </tr>                                                                                   
+                          </table>
                         </div>
-                        <router-link tag="button" :to="{ name: 'room', params: { roomId: room.id }}" class="btn btn-primary btn-block" >Choose Room</router-link>
+                        <button tag="button" v-on:click="bookRoom(room.id)" class="btn btn-primary btn-block" >More Info</button>
                     </div>            
                     
                 </div>
@@ -48,20 +65,54 @@
     export default {
         data(){
             return {
-                rooms: []
+                rooms: [],
+                search: {}
             }
         },
         methods:{
             searchHotelFromRoute(){
-                let search = {
-                    type: this.$route.query.type,
-                    end_date: this.$route.query.end_date,
-                    start_date: this.$route.query.start_date,
-                }
+                this.search.type = this.$route.query.type;
+                this.search.end_date = this.$route.query.end_date;
+                this.search.start_date = this.$route.query.start_date;
+                 
+                let start = moment(this.search.start_date);
+                let end   = moment(this.search.end_date);
+
+                //Difference in number of days
+                this.search.days = moment.duration(end.diff(start)).asDays();
+            
                 //http://127.0.0.1:8000/api/room/search?type=2&start_date=11-06-2019&end_date=13-06-2019
-                axios.get(`/api/room/search?type=${search.type}&start_date=${search.start_date}&end_date=${search.end_date}`)
+                axios.get(`/api/room/search?type=${this.search.type}&start_date=${this.search.start_date}&end_date=${this.search.end_date}`)
                     .then(response => this.rooms = response.data)
                     .catch(error => console.log(error));                
+            },
+            total(value){
+              if(value === null){return;}
+              const formatter = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                minimumFractionDigits: 2
+              });
+
+              this.search.total = formatter.format(this.search.days * value);
+              return this.search.total;
+            },
+            bookRoom(roomId){
+              let data = {
+                room_id: roomId,
+                date_start: this.search.start_date,
+                date_end: this.search.end_date,
+                search: {...this.search}
+              };
+
+              window.localStorage.setItem('search', JSON.stringify(data));
+              const user = JSON.parse(window.localStorage.getItem('user'));
+
+              if(user && user.access_token){
+                this.$router.push({ name: 'room', params: { roomId: roomId }});
+              }else{
+                this.$router.push({ name: 'auth', query: { roomId: roomId }});
+              }
             }
         },
         created(){
@@ -71,5 +122,7 @@
 </script>
 
 <style lang="scss" scoped>
-
+  table th, .table td {
+      padding: 0.3rem;
+  }
 </style>

@@ -109,8 +109,8 @@
             }
 
         let payload = {
-          start_date: moment(this.search.start_date).format('DD-MM-YYYY'),
-          end_date: moment(this.search.end_date).format('DD-MM-YYYY'),
+          start_date: moment(this.search.start_date).format('YYYY-MM-DD'),
+          end_date: moment(this.search.end_date).format('YYYY-MM-DD'),
           type: this.search.type
         };
 
