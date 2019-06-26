@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Room;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
@@ -23,7 +24,9 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Route::bind('room-manager', function ($value) {
+            return Room::with(['hotel', 'capacity', 'type'])->where('id', $value)->first() ?? abort(404);
+        });
 
         parent::boot();
     }

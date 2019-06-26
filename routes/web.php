@@ -26,8 +26,8 @@ Route::group([
      * 1. ability to retrieve hotel details
      * 2. ability to edit hotel details
      */
-    Route::get('hotel', 'HotelController@index');
-    Route::put('hotel', 'HotelController@edit');
+    // Route::get('hotel', 'HotelController@index');
+    // Route::put('hotel', 'HotelController@edit');
 
     /**
      * Room Manager
@@ -39,19 +39,19 @@ Route::group([
      * Room Type Manager
      * All required fields should be validated 
      */
-    Route::resource('room-type-manager', 'RoomTypeManagerController');
+    // Route::resource('room-type-manager', 'RoomTypeManagerController');
 
     /**
      * Price List Manager
      * All required fields should be validated
      */
-    Route::resource('price-list-manager', 'PriceListManagerController');
+    // Route::resource('price-list-manager', 'PriceListManagerController');
 
     /**
      * Booking Manager
      * All required fields should be validated
      */
-    Route::resource('booking-manager', 'PriceListManagerController');
+    // Route::resource('booking-manager', 'PriceListManagerController');
 
 });
 

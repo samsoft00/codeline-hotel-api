@@ -1913,7 +1913,7 @@ __webpack_require__.r(__webpack_exports__);
       var data = {
         grant_type: 'password',
         client_id: parseInt("2"),
-        client_secret: "kkqbBXaYC7ToT5qQLKSYOfd2Z6QYQQfdfvKsVOZU",
+        client_secret: "eDwaB2ZpgU62Wp21o3RB8I5yL6hZzC9FR2qM1TrK",
         username: this.email,
         password: this.password,
         scope: ''

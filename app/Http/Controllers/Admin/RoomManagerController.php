@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Room;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Hotel;
+use App\RoomType;
+use App\RoomCapacity;
 
 class RoomManagerController extends Controller
 {
@@ -15,8 +18,8 @@ class RoomManagerController extends Controller
      */
     public function index()
     {
-        $room = Room::with(['type.cost', 'capacity', 'booking'])->get();
-        return view('room-manager.index',compact('room'));
+        $rooms = Room::with(['hotel', 'type.cost', 'capacity', 'booking'])->get();
+        return view('room-manager.index',compact('rooms'));
     }
 
     /**
@@ -26,7 +29,11 @@ class RoomManagerController extends Controller
      */
     public function create()
     {
-        //
+        $hotels = Hotel::all();
+        $roomTypes = RoomType::all();
+        $capacity = RoomCapacity::all();
+
+        return view('room-manager.create', compact(['hotels', 'roomTypes', 'capacity']));
     }
 
     /**
@@ -37,7 +44,29 @@ class RoomManagerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'hotel_id'  =>  'required',
+            'name'      =>  'required',
+            'room_type_id' => 'required',
+            'room_capacity_id' => 'required',
+            'image' =>  'required|image|mimes:jpeg,png,jpg'
+        ]);
+        
+        $imageName = time().'.'.request()->image->getClientOriginalExtension();
+        request()->image->move(public_path('images/hotel'), $imageName);
+
+        $data = $request->input();
+
+        Room::create([
+            'hotel_id'          =>  $data['hotel_id'],
+            'name'              =>  $data['name'],
+            'room_type_id'      => $data['room_type_id'],
+            'room_capacity_id'  => $data['room_capacity_id'],
+            'image'             => $imageName
+        ]);
+
+        return redirect()->route('room-manager.index')->with('success','You have successfully add room.');
+
     }
 
     /**
@@ -48,7 +77,7 @@ class RoomManagerController extends Controller
      */
     public function show(Room $room)
     {
-        //
+        return view('room-manager.show', compact('room'));
     }
 
     /**
@@ -59,7 +88,11 @@ class RoomManagerController extends Controller
      */
     public function edit(Room $room)
     {
-        //
+        $hotels = Hotel::all();
+        $types = RoomType::all();
+        $capacity = RoomCapacity::all();
+
+        return view('room-manager.edit', compact(['room', 'hotels', 'types', 'capacity']));
     }
 
     /**
@@ -71,7 +104,29 @@ class RoomManagerController extends Controller
      */
     public function update(Request $request, Room $room)
     {
-        //
+        $request->validate([
+            'hotel_id'  =>  'required',
+            'name'      =>  'required',
+            'room_type_id' => 'required',
+            'room_capacity_id' => 'required',
+            'image' =>  'required|image|mimes:jpeg,png,jpg'
+        ]);
+        
+
+        $imageName = time().'.'.request()->image->getClientOriginalExtension();
+        request()->image->move(public_path('images/hotel'), $imageName);        
+        
+        $data = $request->input();
+
+        $room->update([
+            'hotel_id'          => $data['hotel_id'],
+            'name'              => $data['name'],
+            'room_type_id'      => $data['room_type_id'],
+            'room_capacity_id'  => $data['room_capacity_id'],
+            'image'             => $imageName
+        ]);
+        
+        return redirect()->route('room-manager.index')->with('success','Room updated successfully');        
     }
 
     /**
@@ -82,6 +137,7 @@ class RoomManagerController extends Controller
      */
     public function destroy(Room $room)
     {
-        //
+        $room->delete();
+        return redirect()->back()->with('success', 'Room has been deleted Successfully');
     }
 }

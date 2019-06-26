@@ -16,6 +16,10 @@ class Room extends Model
         'room_type_id', 'room_capacity_id', 'hotel_id'
     ];
 
+    protected $fillable = [
+        'hotel_id', 'name', 'room_type_id', 'room_capacity_id', 'image'
+    ];
+
     public function type(){
         return $this->hasOne(RoomType::class, 'id', 'room_type_id');
     }
