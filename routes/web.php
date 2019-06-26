@@ -18,40 +18,42 @@ Route::group([
     'namespace'     =>  'Admin',
     'prefix'        =>  'admin'    
 ], function(){
-    Route::get('', function(){ return 'we are here'; });
-    Route::get('login', function(){ return 'we are here to login'; });
 
+    Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
+    Route::post('login', 'Auth\LoginController@login')->name('post-login');
+    Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+    
     /**
      * Hotel Details
      * 1. ability to retrieve hotel details
      * 2. ability to edit hotel details
      */
-    // Route::get('hotel', 'HotelController@index');
+
     // Route::put('hotel', 'HotelController@edit');
 
     /**
      * Room Manager
      * crud actions for room manager
      */
-    Route::resource('room-manager', 'RoomManagerController');
+    Route::resource('room-manager', 'RoomManagerController')->middleware('auth');
 
     /**
      * Room Type Manager
      * All required fields should be validated 
      */
-    Route::resource('room-type-manager', 'RoomTypeManagerController');
+    Route::resource('room-type-manager', 'RoomTypeManagerController')->middleware('auth');
 
     /**
      * Price List Manager
      * All required fields should be validated
      */
-    Route::resource('price-list-manager', 'PriceListManagerController');
+    Route::resource('price-list-manager', 'PriceListManagerController')->middleware('auth');
 
     /**
      * Booking Manager
      * All required fields should be validated
      */
-    Route::resource('booking-manager', 'BookingManagerController');
+    Route::resource('booking-manager', 'BookingManagerController')->middleware('auth');
 
 });
 
