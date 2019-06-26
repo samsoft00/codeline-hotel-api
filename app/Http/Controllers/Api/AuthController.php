@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
+use App\Customer;
 
 class AuthController extends ApiBaseController
 {
@@ -15,12 +16,23 @@ class AuthController extends ApiBaseController
 
         $request->validate([
             'email'     => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password'  => ['required', 'string', 'min:8', 'confirmed'],            
+            'password'  => ['required', 'string', 'min:8', 'confirmed'],
+            'first_name' => ['required', 'string'],
+            'last_name'  => ['required', 'string'],
+            'phone'      => ['required', 'string'],       
         ]);
 
         $user = User::create([
             'email'     => $request->input('email'),
             'password'  => Hash::make($request->input('password')),            
+        ]);
+
+        Customer::create([
+            'user_id'       =>  $user->id,
+            'first_name'    =>  $request->input('first_name'),
+            'last_name'     =>  $request->input('last_name'),
+            'phone'         =>  $request->input('phone'),
+            'email'         =>  $user->email,            
         ]);
 
         $tokenResult = $user->createToken('authToken');

@@ -39,6 +39,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function customer(){
+        return $this->hasOne(Customer::class, 'user_id', 'id');
+    }
+
     /**
     * Validate the password of the user for the Passport password grant.
     *

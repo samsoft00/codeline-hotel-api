@@ -28,6 +28,15 @@
                         <validation-errors :errors="validationErrors" v-if="validationErrors"></validation-errors>
                         <hr class="colorgraph">
                         <div class="form-group">
+                            <input type="text" name="first_name" v-model="first_name" class="form-control input-lg" placeholder="First Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="last_name" v-model="last_name" class="form-control input-lg" placeholder="Last Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="phone" v-model="phone" class="form-control input-lg" placeholder="Phone Number" required>
+                        </div>                                                                        
+                        <div class="form-group">
                             <input type="email" name="email" v-model="email" class="form-control input-lg" placeholder="Email Address" required>
                         </div>
                         <div class="form-group">
@@ -61,6 +70,9 @@
     export default {
         data(){
             return {
+                first_name:'',
+                last_name: '',
+                phone: '',
                 email: '',
                 password: '',
                 confirmpassword: '',
@@ -78,6 +90,9 @@
                 // }
 
                 let data = {
+                    first_name: this.first_name,
+                    last_name: this.last_name,
+                    phone: this.phone,
                     email : this.email,
                     password: this.password,
                     'password_confirmation': this.confirmpassword

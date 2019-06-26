@@ -48,10 +48,10 @@ MIX_CLIENT_SECRET=eDwaB2ZpgU62Wp21o3RB8I5yL6hZzC9FR2qM1TrK <br/>
     ``` php artisan serve ``` <br/>
 then go to <br/>
     http://localhost:8000 => Home Page <br/>
-    http://localhost:8000/admin => Administrator Page <br/>
+    http://localhost:8000/admin/room-manager => Administrator Page <br/>
 
 ## Admin Login Credential
-Email: admin@codelinehotel.io
-Password: password
+<strong>Email: </strong> admin@codelinehotel.io <br/>
+<strong>Password: </strong> password
 
 If you've any issue setting this up, will be available to help out.

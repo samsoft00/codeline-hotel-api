@@ -46,7 +46,9 @@ class BookingManagerController extends Controller
             'room_id'       =>  'required',
             'date_start'    =>  'required',
             'date_end'      =>  'required',
-            'customer_id'   =>  'required'
+            'customer_id'   =>  'required',
+            'total_price'   =>  'required',
+            'total_night'   =>  'required'
         ]);
 
         $data = $request->input();
@@ -54,7 +56,9 @@ class BookingManagerController extends Controller
             'room_id'       =>  $data['room_id'],
             'date_start'    =>  $data['date_start'],
             'date_end'      =>  $data['date_end'],
-            'customer_id'   =>  $data['customer_id']
+            'customer_id'   =>  $data['customer_id'],
+            'total_price'   =>  $data['total_price'],
+            'total_night'   =>  $data['total_night']
         ]);
 
         return redirect()->route('booking-manager.index')->with('success','You have successfully add Booking.'); 
@@ -97,7 +101,9 @@ class BookingManagerController extends Controller
             'room_id'       =>  'required',
             'date_start'    =>  'required',
             'date_end'      =>  'required',
-            'customer_id'   =>  'required'
+            'customer_id'   =>  'required',
+            'total_price'   =>  'required',
+            'total_night'   =>  'required'
         ]);
 
         $data = $request->input();
@@ -105,7 +111,9 @@ class BookingManagerController extends Controller
             'room_id'       =>  $data['room_id'],
             'date_start'    =>  $data['date_start'],
             'date_end'      =>  $data['date_end'],
-            'customer_id'   =>  $data['customer_id']
+            'customer_id'   =>  $data['customer_id'],
+            'total_price'   =>  $data['total_price'],
+            'total_night'   =>  $data['total_night']
         ]);
 
         return redirect()->route('booking-manager.index')->with('success','Room updated successfully');        

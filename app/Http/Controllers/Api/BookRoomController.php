@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Booking;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Customer;
 
 class BookRoomController extends ApiBaseController
 {
@@ -34,15 +35,21 @@ class BookRoomController extends ApiBaseController
         $request->validate([
             'room_id'       =>  'required',
             'start_date'    =>  'required',
-            'end_date'      =>  'required'
+            'end_date'      =>  'required',
+            'total_price'   =>  'required',
+            'total_night'   =>  'required'
         ]);
 
         $data = $request->input();
+        $customer = Customer::where('user_id', $request->user()->id)->first();
+        
         $booking = Booking::create([
             'room_id'       =>  $data['room_id'],
             'date_start'    =>  $data['start_date'],
             'date_end'      =>  $data['end_date'],
-            'customer_id'   =>  $request->user()->id
+            'customer_id'   =>  $customer->id,
+            'total_price'   =>  $data['total_price'],
+            'total_night'   =>  $data['total_night']
         ]);
 
         return $this->respond($booking);

@@ -113,11 +113,16 @@
             },
             bookRoomNow(){
               const user = JSON.parse(window.localStorage.getItem('user'));
+              const search = JSON.parse(window.localStorage.getItem('search'));
+              
+              console.log(search);
               if(user && user.access_token){
                 let data = {
-                    end_date:this.search.date_end,
-                    start_date: this.search.date_start,
-                    room_id: this.search.room_id
+                    end_date:search.date_end,
+                    start_date: search.date_start,
+                    room_id: search.room_id,
+                    total_price: parseFloat( search.search.total.slice(1) ),
+                    total_night: parseInt( search.search.days )
                 }
                 axios.post('/api/book-room', data)
                      .then(response => {

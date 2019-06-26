@@ -21,6 +21,8 @@
                                 <th>Customer's Email</th>
                                 <th>Start Date</th>
                                 <th>End Date</th>
+                                <th>Total Night</th>
+                                <th>Total Price</th>
                                 <th>Booking Time</th>
                                 <th>Action</th>
                             </tr>
@@ -34,6 +36,8 @@
                                     <td>{{ $booking->customer->email }}</td>
                                     <td>{{ $booking->date_start }}</td>
                                     <td>{{ $booking->date_end }}</td>
+                                    <td>{{ $booking->total_night }}</td>
+                                    <td>{{ '$'.$booking->total_price }}</td>
                                     <td>{{ $booking->created_at }}</td>
                                     <td>
                                         <a href="{{ route('booking-manager.show', $booking->id) }}" class="btn btn-success">View</a> 

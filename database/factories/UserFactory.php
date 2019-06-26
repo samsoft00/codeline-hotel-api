@@ -137,13 +137,22 @@ $factory->define(Room::class, function(Faker $faker){
 });
 
 $factory->define(Booking::class, function(Faker $faker){
-    $room = Room::inRandomOrder()->first();
+    $room = Room::with(['type'])->inRandomOrder()->first();
     $customer = Customer::inRandomOrder()->first();
+
+    $start_date = Carbon::now()->subWeek(array_rand([2, 5, 1, 7, 3], 1));
+    $end_date = Carbon::now()->addWeek(array_rand([2, 5, 1, 7, 3], 1));
+
+    $diff = $end_date->diffInDays($start_date);
+
+    $total_price = $diff * $room->type->cost->price; 
 
     return [
         'room_id'       =>  $room->id,
-        'date_start'    =>  Carbon::now()->subWeek(array_rand([2, 5, 1, 7, 3], 1)),
-        'date_end'      =>  Carbon::now()->addWeek(array_rand([2, 5, 1, 7, 3], 1)),
+        'date_start'    =>  $start_date,
+        'date_end'      =>  $end_date,
+        'total_night'   =>  $diff,
+        'total_price'   =>  $total_price,
         'customer_id'   =>  $customer->id
     ];
 });
