@@ -47,11 +47,47 @@ MIX_CLIENT_SECRET=eDwaB2ZpgU62Wp21o3RB8I5yL6hZzC9FR2qM1TrK <br/>
 12. Finally, run the following command in your project directory to boot up the server. <br/>
     ``` php artisan serve ``` <br/>
 then go to <br/>
-    http://localhost:8000 => Home Page <br/>
-    http://localhost:8000/admin/room-manager => Administrator Page <br/>
+    http://127.0.0.1:8000 => Home Page <br/>
+    http://127.0.0.1:8000/admin/room-manager => Administrator Page <br/>
 
 ## Admin Login Credential
-<strong>Email: </strong> admin@codelinehotel.io <br/>
-<strong>Password: </strong> password
+<table>
+    <tr>
+        <th>Email Address</th>
+        <td> admin@codelinehotel.io </td>
+    </tr>
+    <tr>
+        <th>Password</th>
+        <td> password </td>
+    </tr>
+</table>
+
+## Testing Instructions
+1. Create ```.env.testing``` file withe following Parameters
+
+``` javascript
+    APP_NAME=Laravel
+    APP_ENV=testing
+    APP_KEY=base64:5CpEFQ9UTR543dbJUsT3araoSSyxuN8NF92gCJJXpk8=
+    APP_DEBUG=true
+    APP_URL=http://127.0.0.1:8000
+
+    LOG_CHANNEL=stack
+
+    DB_CONNECTION=sqlite
+    DB_DATABASE=./database/test.sqlite
+
+    BROADCAST_DRIVER=log
+    CACHE_DRIVER=array
+    SESSION_DRIVER=array
+    SESSION_LIFETIME=120
+    QUEUE_DRIVER=sync
+
+    MAIL_DRIVER=array
+```
+2. Create ```database/test.sqlite ``` and then update the path in ```.env.testing``` 
+3. Next, because we're going to make use of the seeder, run the following command and specify the env
+    ```php artisan migrate --seed --env=testing```
+4. Run test ``` composer test ```
 
 If you've any issue setting this up, will be available to help out.
