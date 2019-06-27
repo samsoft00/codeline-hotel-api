@@ -6,10 +6,10 @@ https://app.codeline.io/#/projects/2068/tasks/22107
 Codeline Hotel Management System (CHML) is a web application develop using Laravel and VueJs framework, with expressive, elegant syntax.
 CHML takes the pain out of Hoteliers by easing their Booking process and Customer management, such as:
 
-- [Room Manager].
-- [Room Type Manager].
-- [Price List Manager].
-- [Booking Manager].
+- Room Manager
+- Room Type Manager
+- Price List Manager
+- Booking Manager
 
 ## CHML Homepage
 <div align="center">
@@ -63,7 +63,7 @@ then go to <br/>
 </table>
 
 ## Testing Instructions
-1. Create ```.env.testing``` file withe following Parameters
+1. Create ```.env.testing``` file with the following params
 
 ``` javascript
     APP_NAME=Laravel
