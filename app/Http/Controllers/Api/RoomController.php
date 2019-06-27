@@ -22,6 +22,12 @@ class RoomController extends ApiBaseController
 
     public function search(Request $request)
     {
+        $request->validate([
+            'type'          =>  'required',
+            'start_date'    =>  'required',
+            'end_date'      =>  'required'
+        ]);
+        
         $searchArray = [
             'type'          =>  $request->query('type'),
             'start_date'    =>  Carbon::parse( $request->query('start_date') ),
