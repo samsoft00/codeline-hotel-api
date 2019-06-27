@@ -56,6 +56,6 @@ class RegisterTest extends TestCase
                 'errors'    =>  [
                     'password' => ['The password confirmation does not match.']
                 ]
-             ]);        
+             ]);
     }
 }
