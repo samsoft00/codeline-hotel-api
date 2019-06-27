@@ -15,6 +15,7 @@ class HotelBookingTest extends TestCase
      */
     public function testExample()
     {
+        
         $this->assertTrue(true);
     }
 }

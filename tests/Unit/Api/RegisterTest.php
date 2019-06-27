@@ -36,4 +36,26 @@ class RegisterTest extends TestCase
                 'expires_at'
              ]);
     }
+
+    public function testPasswordAndPasswordConfirmDontMatch(){
+        $faker = Factory::create();
+
+        $payload = [
+            'first_name'=> $faker->firstName(),
+            'last_name' => $faker->lastName(),
+            'phone'     =>  $faker->phoneNumber(),
+            'email'     => $faker->email,
+            'password'  => 'codeline124',
+            'password_confirmation' => 'codeline12453',
+        ];
+
+        $this->json('POST', '/api/auth/register', $payload)
+             ->assertStatus(422)
+             ->assertJson([
+                'message' => 'The given data was invalid.',
+                'errors'    =>  [
+                    'password' => ['The password confirmation does not match.']
+                ]
+             ]);        
+    }
 }

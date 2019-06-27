@@ -84,10 +84,19 @@ then go to <br/>
     QUEUE_DRIVER=sync
 
     MAIL_DRIVER=array
+    
+    MIX_CLIENT_ID=2
+    MIX_CLIENT_SECRET=tCVvCTZjuH1h1rCGNufX2ZGqRAcS3LS3R95u2DEZ    
 ```
 2. Create ```database/test.sqlite ``` and then update the path in ```.env.testing``` 
 3. Next, because we're going to make use of the seeder, run the following command and specify the env
     ```php artisan migrate --seed --env=testing```
+4. Run ```php artisan passport:install --env=testing ``` and copy to replace the below in your ```.env.testing```'
+
+    ``` javascript 
+   MIX_CLIENT_ID=2
+   MIX_CLIENT_SECRET=tCVvCTZjuH1h1rCGNufX2ZGqRAcS3LS3R95u2DEZ
+```
 4. Run test ``` composer test ```
 
 If you've any issue setting this up, will be available to help out.
