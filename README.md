@@ -98,7 +98,9 @@ then go to <br/>
    MIX_CLIENT_SECRET=tCVvCTZjuH1h1rCGNufX2ZGqRAcS3LS3R95u2DEZ
 ```
 4. Run test ``` composer test ```
+<br/>
 
+## Test Console
 <div align="center">
     <img src="public/images/hotel/test.PNG">
 </div>
