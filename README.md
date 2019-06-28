@@ -95,10 +95,9 @@ then go to <br/>
 
     ``` javascript 
    MIX_CLIENT_ID=2
-   MIX_CLIENT_SECRET=tCVvCTZjuH1h1rCGNufX2ZGqRAcS3LS3R95u2DEZ
-```
-4. Run test ``` composer test ```
-<br/>
+   MIX_CLIENT_SECRET=tCVvCTZjuH1h1rCGNufX2ZGqRAcS3LS3R95u2DEZ 
+   ```
+4. Run test ```composer test``` <br/>
 
 ## Test Console
 <div align="center">
