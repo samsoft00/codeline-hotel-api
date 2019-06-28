@@ -99,4 +99,8 @@ then go to <br/>
 ```
 4. Run test ``` composer test ```
 
+<div align="center">
+    <img src="public/images/hotel/test.PNG">
+</div>
+
 If you've any issue setting this up, will be available to help out.
