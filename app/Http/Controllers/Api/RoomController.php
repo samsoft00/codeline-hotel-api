@@ -17,9 +17,10 @@ class RoomController extends ApiBaseController
      */
     public function index()
     {
-        //
+        $rooms = Room::with(['type.cost', 'capacity', 'hotel'])->get();
+        return $this->respond($rooms);
     }
-
+ 
     public function search(Request $request)
     {
         $request->validate([

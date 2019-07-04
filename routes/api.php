@@ -47,10 +47,11 @@ Route::group([
 Route::group([
     'namespace'     =>  'Api',
     'middleware'    =>  'api',
-    'prefix'        =>  'room'
+    'prefix'        =>  'rooms'
 ], function(){
-    Route::get('/search', 'RoomController@search');
+    Route::get('/', 'RoomController@index');
     Route::get('{id}', 'RoomController@show');
+    Route::get('/search', 'RoomController@search');
 
     Route::group([
         'middleware'    =>  'auth:api'
