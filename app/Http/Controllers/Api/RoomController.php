@@ -2,14 +2,33 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Room;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Room;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Response;
 use phpDocumentor\Reflection\Types\Integer;
-use Carbon\Carbon;
 
 class RoomController extends ApiBaseController
 {
+
+    /**
+     * Method to expose room images
+     */
+
+     public function display(String $filename){
+        $path = public_path('images/hotel') . '/' . $filename;
+
+        $file = File::get($path);
+        $type = File::mimeType($path);
+
+        $response = Response::make($file, 200);
+        $response->header("Content-Type", $type);
+
+        return $response;
+     }
+
     /**
      * Display a listing of the resource.
      *

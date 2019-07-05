@@ -52,6 +52,7 @@ Route::group([
     Route::get('/', 'RoomController@index');
     Route::get('{id}', 'RoomController@show');
     Route::get('/search', 'RoomController@search');
+    Route::get('/images/{filename}', 'RoomController@display');
 
     Route::group([
         'middleware'    =>  'auth:api'
