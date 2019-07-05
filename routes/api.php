@@ -50,9 +50,9 @@ Route::group([
     'prefix'        =>  'rooms'
 ], function(){
     Route::get('/', 'RoomController@index');
-    Route::get('{id}', 'RoomController@show');
     Route::get('/search', 'RoomController@search');
     Route::get('/images/{filename}', 'RoomController@display');
+    Route::get('{id}', 'RoomController@show');
 
     Route::group([
         'middleware'    =>  'auth:api'
@@ -91,7 +91,7 @@ Route::group([
  */
 Route::group([
     'namespace'     =>  'Api',
-    'middleware'    =>  'auth:api'
+    'middleware'    =>  'api'
 ], function(){
     Route::apiResources([
         'book-room' => 'BookRoomController'

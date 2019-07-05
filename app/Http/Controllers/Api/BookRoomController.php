@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\User;
 use App\Booking;
+use App\Customer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Customer;
 
 class BookRoomController extends ApiBaseController
 {
@@ -41,7 +42,26 @@ class BookRoomController extends ApiBaseController
         ]);
 
         $data = $request->input();
-        $customer = Customer::where('user_id', $request->user()->id)->first();
+        //check if user login
+        if(is_null( $request->user() )){
+            
+            //Create user with customer information
+            $user = User::create([
+                'email'     => $data['email'],
+                'password'  => Hash::make('password'),            
+            ]);
+
+            $customer = Customer::create([
+                'user_id'       =>  $user->id,
+                'first_name'    =>  $data['first_name'],
+                'last_name'     =>  $data['last_name'],
+                'phone'         =>  $data['phone'],
+                'email'         =>  $user->email,            
+            ]);
+
+        }else{
+            $customer = Customer::where('user_id', $request->user()->id)->first();
+        }
         
         $booking = Booking::create([
             'room_id'       =>  $data['room_id'],

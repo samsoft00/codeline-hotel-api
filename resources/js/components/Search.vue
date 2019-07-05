@@ -82,7 +82,7 @@
                 this.search.days = moment.duration(end.diff(start)).asDays();
             
                 //http://127.0.0.1:8000/api/room/search?type=2&start_date=11-06-2019&end_date=13-06-2019
-                axios.get(`/api/room/search?type=${this.search.type}&start_date=${this.search.start_date}&end_date=${this.search.end_date}`)
+                axios.get(`/api/rooms/search?type=${this.search.type}&start_date=${this.search.start_date}&end_date=${this.search.end_date}`)
                     .then(response => this.rooms = response.data)
                     .catch(error => console.log(error));                
             },
