@@ -1,7 +1,3 @@
-# 22107. Test Assignment for Laravel _ Frontend 
-
-https://app.codeline.io/#/projects/2068/tasks/22107
-
 ## About Codeline Hotel Management System
 Codeline Hotel Management System (CHML) is a web application develop using Laravel and VueJs framework, with expressive, elegant syntax.
 CHML takes the pain out of Hoteliers by easing their Booking process and Customer management, such as:
@@ -22,7 +18,7 @@ CHML takes the pain out of Hoteliers by easing their Booking process and Custome
 </div>
 
 ## CHML Setup
-Setup is pretty simple, foremost you need to have the following installed on your environment, currently using window, you can search on how to set it up on other OS.
+Setup is pretty simple, foremost you need to have the following install on your environment, currently using window, you can search on how to set it up on other OS.
 1. Node && Node Package Manager <br/>
 2. Php && Composer <br/>
 3. Xampp/Wamp <br/>
