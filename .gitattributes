@@ -4,8 +4,4 @@
 *.js linguist-vendored=false
 public/* linguist-vendored=false
 resources/* linguist-vendored=false
-app/* linguist-vendored
-bootstrap/* linguist-vendored
-config/* linguist-vendored
-database/* linguist-vendored
 CHANGELOG.md export-ignore
