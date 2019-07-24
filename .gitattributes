@@ -1,4 +1,9 @@
-*.css linguist-vendored
-*.scss linguist-vendored
-*.js linguist-vendored
+* text=auto
+*.css linguist-vendored=false
+*.scss linguist-vendored=false
+*.js linguist-vendored=false
+app/* linguist-vendored
+bootstrap/* linguist-vendored
+config/* linguist-vendored
+database/* linguist-vendored
 CHANGELOG.md export-ignore
