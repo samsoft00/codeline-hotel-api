@@ -1,0 +1,14 @@
+* text=auto
+*.css linguist-vendored=false
+*.scss linguist-vendored=false
+*.js linguist-vendored=false
+public/* linguist-vendored=false
+resources/* linguist-vendored=false
+app/* linguist-vendored
+bootstrap/* linguist-vendored
+config/* linguist-vendored
+database/* linguist-vendored
+routes/* linguist-vendored
+storage/* linguist-vendored
+test/* linguist-vendored
+CHANGELOG.md export-ignore
