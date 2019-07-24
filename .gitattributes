@@ -1,3 +1,2 @@
-* text=auto
 app/* linguist-vendored
 CHANGELOG.md export-ignore
