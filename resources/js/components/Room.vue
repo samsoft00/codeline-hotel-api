@@ -62,7 +62,6 @@
                             </table>
                             <Rave
                                 :is-production="false"
-                                style-class="paymentbtn"
                                 :email="user.email || 'oyewoleabayomi@gmail.com'"
                                 :amount="paymentData.total_price"
                                 :reference="reference"
@@ -72,9 +71,9 @@
                                 currency="NGN"
                                 ><i>Book Now</i>
                             </Rave>                             
-                            <div class="book_now_button">                         
+                            <!-- <div class="book_now_button">                          -->
                                 <!-- <a @click="bookRoomNow()" href="javacript:;" tag="a">Book Now</a> -->
-                            </div>
+                            <!-- </div> -->
                         </div> 
                     </div>
 
@@ -143,15 +142,15 @@
             },
             paymentCallback(response){
               const search = JSON.parse(window.localStorage.getItem('search'));             
-              
+            //   console.log(response, this.user, search);
               if(this.user && this.user.access_token){
                   
-                  if(response.data.success !== true){
+                  if(response.success !== true){
                       this.$toastr.e("Unable to process payment, check and try again!");
                       return;
                   }
 
-                let { tx } = response.data;
+                let { tx } = response;
                 let data = {
                     end_date:search.date_end,
                     start_date: search.date_start,
@@ -165,7 +164,7 @@
                     payment_id: tx.paymentId,
                     charged_amount: tx.charged_amount,
                     tx_ref: tx.txRef,
-                    status: tx.status,
+                    status: tx.status === 'successful' ? true : false,
                     payment_type : tx.paymentType                   
                 }
                 axios.post('/api/book-room', data)
@@ -205,10 +204,13 @@
     table th, .table td {
         padding: 0.3rem;
     }
-    .paymentbtn{
-        color: #04193d;
-        width: 250px;
-        height: 50px;
-        font-weight: 800;
+    button{
+        width: 152px;
+        height: 54px;
+        background: #ffa37b;
+        text-align: center;
+        margin-top: 26px;
+        -webkit-transition: all 200ms ease;
+        transition: all 200ms ease;
     }  
 </style>

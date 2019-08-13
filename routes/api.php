@@ -91,7 +91,7 @@ Route::group([
  */
 Route::group([
     'namespace'     =>  'Api',
-    'middleware'    =>  'api'
+    'middleware'    =>  'auth:api'
 ], function(){
     Route::apiResources([
         'book-room' => 'BookRoomController'

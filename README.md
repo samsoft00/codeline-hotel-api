@@ -48,7 +48,9 @@ CHML takes the pain out of Hoteliers by easing their Booking process and Custome
 #### Bookings
 | Method | Route | Description |
 | --- | --- | --- |
-| GET | `/api/book-room` | Book Room |
+| POST | `/api/book-room` | Create new Booking |
+| GET | `/api/book-room` | Get All Bookings |
+| GET | `/api/book-room/:id` | Get Booking by ID |
 
 ### CHML Setup
 Setup is pretty simple, foremost you need to have the following install on your environment, currently using window, you can search on how to set it up on other OS.

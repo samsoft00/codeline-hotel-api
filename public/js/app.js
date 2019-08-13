@@ -1914,7 +1914,7 @@ __webpack_require__.r(__webpack_exports__);
       var data = {
         grant_type: 'password',
         client_id: parseInt("2"),
-        client_secret: "KyhNrqJDyH29On6O8jHfaLcsrlnNBoQs7zYaWGZP",
+        client_secret: "aOWJ4uvqxsFCdgJjF0sJGF6NYNU4YMrMV8KGYRsD",
         username: this.email,
         password: this.password,
         scope: ''
@@ -2467,7 +2467,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2533,15 +2532,15 @@ __webpack_require__.r(__webpack_exports__);
     paymentCallback: function paymentCallback(response) {
       var _this2 = this;
 
-      var search = JSON.parse(window.localStorage.getItem('search'));
+      var search = JSON.parse(window.localStorage.getItem('search')); //   console.log(response, this.user, search);
 
       if (this.user && this.user.access_token) {
-        if (response.data.success !== true) {
+        if (response.success !== true) {
           this.$toastr.e("Unable to process payment, check and try again!");
           return;
         }
 
-        var tx = response.data.tx;
+        var tx = response.tx;
         var data = {
           end_date: search.date_end,
           start_date: search.date_start,
@@ -2554,7 +2553,7 @@ __webpack_require__.r(__webpack_exports__);
           payment_id: tx.paymentId,
           charged_amount: tx.charged_amount,
           tx_ref: tx.txRef,
-          status: tx.status,
+          status: tx.status === 'successful' ? true : false,
           payment_type: tx.paymentType
         };
         axios.post('/api/book-room', data).then(function (response) {
@@ -7455,7 +7454,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "table th[data-v-cd69db74], .table td[data-v-cd69db74] {\n  padding: 0.3rem;\n}\n.paymentbtn[data-v-cd69db74] {\n  color: #04193d;\n  width: 250px;\n  height: 50px;\n  font-weight: 800;\n}", ""]);
+exports.push([module.i, "table th[data-v-cd69db74], .table td[data-v-cd69db74] {\n  padding: 0.3rem;\n}\nbutton[data-v-cd69db74] {\n  width: 152px;\n  height: 54px;\n  background: #ffa37b;\n  text-align: center;\n  margin-top: 26px;\n  -webkit-transition: all 200ms ease;\n  transition: all 200ms ease;\n}", ""]);
 
 // exports
 
@@ -59925,7 +59924,6 @@ var render = function() {
                   {
                     attrs: {
                       "is-production": false,
-                      "style-class": "paymentbtn",
                       email: _vm.user.email || "oyewoleabayomi@gmail.com",
                       amount: _vm.paymentData.total_price,
                       reference: _vm.reference,
@@ -59936,9 +59934,7 @@ var render = function() {
                     }
                   },
                   [_c("i", [_vm._v("Book Now")])]
-                ),
-                _vm._v(" "),
-                _c("div", { staticClass: "book_now_button" })
+                )
               ],
               1
             )

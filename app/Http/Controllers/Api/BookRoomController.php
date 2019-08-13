@@ -58,28 +58,11 @@ class BookRoomController extends ApiBaseController
             //code...
 
             $data = $request->input();
-            //check if user login
-            if(is_null( $request->user() )){
-                
-                //Create user with customer information
-                $user = User::create([
-                    'email'     => $data['email'],
-                    'password'  => Hash::make('password'),            
-                ]);
-    
-                $customer = Customer::create([
-                    'user_id'       =>  $user->id,
-                    'first_name'    =>  $data['first_name'],
-                    'last_name'     =>  $data['last_name'],
-                    'phone'         =>  $data['phone'],
-                    'email'         =>  $user->email,            
-                ]);
-    
-            }else{
-                $customer = Customer::where('user_id', $request->user()->id)->first();
-            }
+            $customer = Customer::where('user_id', $request->user()->id)->first();
     
             $tran = Transaction::create([
+                'tx_id'             => $data['tx_id'],
+                'amount'            => $data['amount'],
                 'order_ref'         => $data['order_ref'], 
                 'payment_id'        => $data['payment_id'], 
                 'charged_amount'    => $data['charged_amount'], 
