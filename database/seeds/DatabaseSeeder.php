@@ -6,6 +6,7 @@ use App\Hotel;
 use App\Customer;
 use App\Room;
 use App\Booking;
+use App\Transaction;
 
 class DatabaseSeeder extends Seeder
 {
@@ -27,6 +28,7 @@ class DatabaseSeeder extends Seeder
         factory(User::class, 5)->create();
         factory(Customer::class, 5)->create();
         factory(Hotel::class, 1)->create();
+        factory(Transaction::class, 10)->create();
         factory(Room::class, 10)->create();
         factory(Booking::class, 10)->create();        
     }

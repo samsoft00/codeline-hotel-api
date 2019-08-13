@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\User;
 use App\Booking;
 use App\Customer;
+use App\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class BookRoomController extends ApiBaseController
@@ -19,7 +21,8 @@ class BookRoomController extends ApiBaseController
     {
         $booking = Booking::with([
             'room.type.cost',
-            'customer'
+            'customer',
+            'transaction'
         ])->get();
 
         return $this->respond($booking);
@@ -38,41 +41,73 @@ class BookRoomController extends ApiBaseController
             'start_date'    =>  'required',
             'end_date'      =>  'required',
             'total_price'   =>  'required',
-            'total_night'   =>  'required'
+            'total_night'   =>  'required',
+            'tx_id'         =>  'required',
+            'order_ref'     =>  'required',
+            'payment_id'    =>  'required',
+            'amount'        =>  'required', 
+            'charged_amount'=>  'required', 
+            'tx_ref'        =>  'required',
+            'status'        =>  'required',
+            'payment_type'  =>  'required'            
         ]);
 
-        $data = $request->input();
-        //check if user login
-        if(is_null( $request->user() )){
+        DB::beginTransaction();
+
+        try {
+            //code...
+
+            $data = $request->input();
+            //check if user login
+            if(is_null( $request->user() )){
+                
+                //Create user with customer information
+                $user = User::create([
+                    'email'     => $data['email'],
+                    'password'  => Hash::make('password'),            
+                ]);
+    
+                $customer = Customer::create([
+                    'user_id'       =>  $user->id,
+                    'first_name'    =>  $data['first_name'],
+                    'last_name'     =>  $data['last_name'],
+                    'phone'         =>  $data['phone'],
+                    'email'         =>  $user->email,            
+                ]);
+    
+            }else{
+                $customer = Customer::where('user_id', $request->user()->id)->first();
+            }
+    
+            $tran = Transaction::create([
+                'order_ref'         => $data['order_ref'], 
+                'payment_id'        => $data['payment_id'], 
+                'charged_amount'    => $data['charged_amount'], 
+                'tx_ref'            => $data['tx_ref'],
+                'status'            => $data['status'],
+                'payment_type'      => $data['payment_type']    
+            ]);
             
-            //Create user with customer information
-            $user = User::create([
-                'email'     => $data['email'],
-                'password'  => Hash::make('password'),            
+            $booking = Booking::create([
+                'room_id'       =>  $data['room_id'],
+                'date_start'    =>  $data['start_date'],
+                'date_end'      =>  $data['end_date'],
+                'customer_id'   =>  $customer->id,
+                'total_price'   =>  $data['total_price'],
+                'total_night'   =>  $data['total_night'],
+                'transaction_id'=>  $tran->id
             ]);
 
-            $customer = Customer::create([
-                'user_id'       =>  $user->id,
-                'first_name'    =>  $data['first_name'],
-                'last_name'     =>  $data['last_name'],
-                'phone'         =>  $data['phone'],
-                'email'         =>  $user->email,            
-            ]);
+            DB::commit();
+    
+            return $this->respond($booking);            
 
-        }else{
-            $customer = Customer::where('user_id', $request->user()->id)->first();
+        } catch (\Exception $e) {
+            //throw $e;
+            DB::rollBack();
+            return $this->setStatusCode(500)->respond($e->getMessage());
         }
-        
-        $booking = Booking::create([
-            'room_id'       =>  $data['room_id'],
-            'date_start'    =>  $data['start_date'],
-            'date_end'      =>  $data['end_date'],
-            'customer_id'   =>  $customer->id,
-            'total_price'   =>  $data['total_price'],
-            'total_night'   =>  $data['total_night']
-        ]);
 
-        return $this->respond($booking);
     }
 
     /**

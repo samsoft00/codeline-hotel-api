@@ -84,8 +84,10 @@
                 axios.post('/oauth/token', data)
                      .then(payload => {
                          if(payload.status === 200){
+                             console.log(payload);
                              user.access_token = payload.data.access_token;
                              user.refresh_token = payload.data.refresh_token;
+                             user.email = payload.data.username;
                              window.localStorage.setItem('user', JSON.stringify(user));
                             //  this.$router.push({name: 'home'});//temporary
                              if(this.routeQueryId !== ""){

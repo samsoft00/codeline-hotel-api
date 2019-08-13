@@ -105,6 +105,7 @@
                          console.log(payload);
                          if(payload.status === 200){
                              user.access_token = payload.data.access_token;
+                             user.email = payload.data.username;
                              window.localStorage.setItem('user', JSON.stringify(user));
                              if(this.routeQueryId !== ""){
                                  this.$router.push({name: 'room', params: { roomId: this.routeQueryId } });

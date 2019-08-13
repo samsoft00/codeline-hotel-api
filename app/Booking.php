@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Transaction;
 use Illuminate\Database\Eloquent\Model;
 
 class Booking extends Model
@@ -17,4 +18,8 @@ class Booking extends Model
     public function customer(){
         return $this->hasOne(Customer::class, 'id', 'customer_id');
     }
+
+    public function transaction(){
+        return $this->hasOne(Transaction::class, 'id', 'transaction_id');
+    }    
 }

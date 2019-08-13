@@ -17,7 +17,40 @@ CHML takes the pain out of Hoteliers by easing their Booking process and Custome
     <img src="public/images/hotel/backend-page.PNG">
 </div>
 
-## CHML Setup
+### API Endpoint
+#### User
+| Method | Route | Description |
+| --- | --- | --- |
+| POST | `/api/login` | Set new value |
+| GET | `/api/register` | Get all settings |
+| GET | `/api/logout` | Get value by key |
+| PUT | `/api/user` | Update value by key |
+
+#### Hotel Information
+| Method | Route | Description |
+| --- | --- | --- |
+| GET | `/api/hotels` | Delete key and value |
+| GET | `/api/hotels/:id` | Delete key and value |
+
+#### Rooms
+| Method | Route | Description |
+| --- | --- | --- |
+| GET | `/api/rooms` | Get all available rooms |
+| POST | `/api/rooms` | Create a room |
+| GET | `/api/rooms/:id` | Get room by Room ID |
+| PUT | `/api/rooms/:id` | Update room by Room ID |
+| DELETE | `/api/rooms/:id` | Delete room by Room ID |
+| GET | `/api/rooms/search` | Search room |
+| GET | `/api/rooms/images/{filename}` | Get room image |
+| GET | `/api/rooms/room-type` | Get All room type |
+| GET | `/api/rooms/room-capacity` | Get All room type |
+
+#### Bookings
+| Method | Route | Description |
+| --- | --- | --- |
+| GET | `/api/book-room` | Book Room |
+
+### CHML Setup
 Setup is pretty simple, foremost you need to have the following install on your environment, currently using window, you can search on how to set it up on other OS.
 1. Node && Node Package Manager <br/>
 2. Php && Composer <br/>

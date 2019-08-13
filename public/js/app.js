@@ -1923,8 +1923,10 @@ __webpack_require__.r(__webpack_exports__);
       var user = {};
       axios.post('/oauth/token', data).then(function (payload) {
         if (payload.status === 200) {
+          console.log(payload);
           user.access_token = payload.data.access_token;
           user.refresh_token = payload.data.refresh_token;
+          user.email = payload.data.username;
           window.localStorage.setItem('user', JSON.stringify(user)); //  this.$router.push({name: 'home'});//temporary
 
           if (_this.routeQueryId !== "") {
@@ -2336,6 +2338,7 @@ __webpack_require__.r(__webpack_exports__);
 
         if (payload.status === 200) {
           user.access_token = payload.data.access_token;
+          user.email = payload.data.username;
           window.localStorage.setItem('user', JSON.stringify(user));
 
           if (_this.routeQueryId !== "") {
@@ -2453,6 +2456,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2474,8 +2489,23 @@ __webpack_require__.r(__webpack_exports__);
           image: ''
         }
       },
-      search: {}
+      search: {},
+      user: {},
+      paymentData: {},
+      raveKey: "FLWPUBK_TEST-a3d54126ef3cbb1d45361aa7d599eb3b-X"
     };
+  },
+  computed: {
+    reference: function reference() {
+      var text = "";
+      var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+      for (var i = 0; i < 10; i++) {
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+      }
+
+      return text;
+    }
   },
   methods: {
     fetchRoomById: function fetchRoomById() {
@@ -2497,24 +2527,40 @@ __webpack_require__.r(__webpack_exports__);
     fetchSearchInfo: function fetchSearchInfo() {
       this.search = JSON.parse(window.localStorage.getItem('search'));
     },
-    bookRoomNow: function bookRoomNow() {
+    close: function close() {
+      console.log('Close App');
+    },
+    paymentCallback: function paymentCallback(response) {
       var _this2 = this;
 
-      var user = JSON.parse(window.localStorage.getItem('user'));
       var search = JSON.parse(window.localStorage.getItem('search'));
-      console.log(search);
 
-      if (user && user.access_token) {
+      if (this.user && this.user.access_token) {
+        if (response.data.success !== true) {
+          this.$toastr.e("Unable to process payment, check and try again!");
+          return;
+        }
+
+        var tx = response.data.tx;
         var data = {
           end_date: search.date_end,
           start_date: search.date_start,
           room_id: search.room_id,
           total_price: parseFloat(search.search.total.slice(1)),
-          total_night: parseInt(search.search.days)
+          total_night: parseInt(search.search.days),
+          tx_id: tx.id,
+          amount: tx.amount,
+          order_ref: tx.orderRef,
+          payment_id: tx.paymentId,
+          charged_amount: tx.charged_amount,
+          tx_ref: tx.txRef,
+          status: tx.status,
+          payment_type: tx.paymentType
         };
         axios.post('/api/book-room', data).then(function (response) {
-          _this2.$toastr.e(""); //clear storage
+          _this2.$toastr.e("");
 
+          console.log("booking ".concat(response)); //clear storage
 
           window.localStorage.removeItem('search');
 
@@ -2542,6 +2588,14 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.fetchSearchInfo();
+    this.user = JSON.parse(window.localStorage.getItem('user'));
+    this.paymentData = {
+      end_date: this.search.date_end,
+      start_date: this.search.date_start,
+      room_id: this.search.room_id,
+      total_price: parseFloat(this.search.search.total.slice(1)),
+      total_night: parseInt(this.search.search.days)
+    };
   }
 });
 
@@ -7401,7 +7455,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "table th[data-v-cd69db74], .table td[data-v-cd69db74] {\n  padding: 0.3rem;\n}", ""]);
+exports.push([module.i, "table th[data-v-cd69db74], .table td[data-v-cd69db74] {\n  padding: 0.3rem;\n}\n.paymentbtn[data-v-cd69db74] {\n  color: #04193d;\n  width: 250px;\n  height: 50px;\n  font-weight: 800;\n}", ""]);
 
 // exports
 
@@ -59799,81 +59853,95 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-xl-5 col-lg-6" }, [
-            _c("div", { staticClass: "details_content" }, [
-              _c("div", { staticClass: "details_title" }, [
-                _vm._v(
-                  _vm._s(_vm.room.capacity.name) +
-                    " Room (" +
-                    _vm._s(_vm.room.name) +
-                    ")"
-                )
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "badge badge-danger details_sub",
-                  staticStyle: { "font-size": "inherit" }
-                },
-                [_vm._v("$" + _vm._s(_vm.room.type.cost.price) + "/Night")]
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "details_list" }, [
-                _c("ul", [
-                  _c("li", [_vm._v("Room Name: " + _vm._s(_vm.room.name))]),
-                  _vm._v(" "),
-                  _c("li", [
-                    _vm._v(
-                      "Room Capacity: " +
-                        _vm._s(_vm.room.capacity.name + " Room")
-                    )
+            _c(
+              "div",
+              { staticClass: "details_content" },
+              [
+                _c("div", { staticClass: "details_title" }, [
+                  _vm._v(
+                    _vm._s(_vm.room.capacity.name) +
+                      " Room (" +
+                      _vm._s(_vm.room.name) +
+                      ")"
+                  )
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "badge badge-danger details_sub",
+                    staticStyle: { "font-size": "inherit" }
+                  },
+                  [_vm._v("$" + _vm._s(_vm.room.type.cost.price) + "/Night")]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "details_list" }, [
+                  _c("ul", [
+                    _c("li", [_vm._v("Room Name: " + _vm._s(_vm.room.name))]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v(
+                        "Room Capacity: " +
+                          _vm._s(_vm.room.capacity.name + " Room")
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("Room Type: " + _vm._s(_vm.room.type.type))
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("table", { staticClass: "table table-borderless" }, [
+                  _c("tr", [
+                    _c("th", [_vm._v("Start Date")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(this.search.date_start))])
                   ]),
                   _vm._v(" "),
-                  _c("li", [_vm._v("Room Type: " + _vm._s(_vm.room.type.type))])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("table", { staticClass: "table table-borderless" }, [
-                _c("tr", [
-                  _c("th", [_vm._v("Start Date")]),
+                  _c("tr", [
+                    _c("th", [_vm._v("End Date")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(this.search.date_end))])
+                  ]),
                   _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(this.search.date_start))])
+                  _c("tr", [
+                    _c("th", [_vm._v("Total Days")]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _vm._v(_vm._s(this.search.search.days + " Days"))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("tr", [
+                    _c("th", [_vm._v("Total Cost")]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(this.search.search.total))])
+                  ])
                 ]),
                 _vm._v(" "),
-                _c("tr", [
-                  _c("th", [_vm._v("End Date")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(this.search.date_end))])
-                ]),
-                _vm._v(" "),
-                _c("tr", [
-                  _c("th", [_vm._v("Total Days")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(this.search.search.days + " Days"))])
-                ]),
-                _vm._v(" "),
-                _c("tr", [
-                  _c("th", [_vm._v("Total Cost")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(this.search.search.total))])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "book_now_button" }, [
                 _c(
-                  "a",
+                  "Rave",
                   {
-                    attrs: { href: "javacript:;", tag: "a" },
-                    on: {
-                      click: function($event) {
-                        return _vm.bookRoomNow()
-                      }
+                    attrs: {
+                      "is-production": false,
+                      "style-class": "paymentbtn",
+                      email: _vm.user.email || "oyewoleabayomi@gmail.com",
+                      amount: _vm.paymentData.total_price,
+                      reference: _vm.reference,
+                      "rave-key": _vm.raveKey,
+                      callback: _vm.paymentCallback,
+                      close: _vm.close,
+                      currency: "NGN"
                     }
                   },
-                  [_vm._v("Book Now")]
-                )
-              ])
-            ])
+                  [_c("i", [_vm._v("Book Now")])]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "book_now_button" })
+              ],
+              1
+            )
           ])
         ])
       ])
@@ -60514,6 +60582,17 @@ function normalizeComponent (
   }
 }
 
+
+/***/ }),
+
+/***/ "./node_modules/vue-ravepayment/dist/rave.min.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/vue-ravepayment/dist/rave.min.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+!function(e,t){ true?module.exports=t():undefined}(window,function(){return function(n){function o(e){if(r[e])return r[e].exports;var t=r[e]={i:e,l:!1,exports:{}};return n[e].call(t.exports,t,t.exports,o),t.l=!0,t.exports}var r={};return o.m=n,o.c=r,o.d=function(e,t,n){o.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:n})},o.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},o.t=function(t,e){if(1&e&&(t=o(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var n=Object.create(null);if(o.r(n),Object.defineProperty(n,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var r in t)o.d(n,r,function(e){return t[e]}.bind(null,r));return n},o.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return o.d(t,"a",t),t},o.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},o.p="/dist/",o(o.s=4)}([function(e,t,n){var r=n(2);"string"==typeof r&&(r=[[e.i,r,""]]),r.locals&&(e.exports=r.locals);(0,n(5).default)("7ce5ac5d",r,!0,{})},function(e,t,n){"use strict";n(0)},function(e,t,n){(e.exports=n(3)(!1)).push([e.i,"\n.payButton{\n    color: #61DAFB;\n    width: 250px;\n    height: 50px;\n    font-weight: 800;\n}\n",""])},function(e){"use strict";function r(e,t){var n=e[1]||"",r=e[3];if(!r)return n;if(t&&"function"==typeof btoa){var o="/*# sourceMappingURL=data:application/json;charset=utf-8;base64,"+btoa(unescape(encodeURIComponent(JSON.stringify(r))))+" */",i=r.sources.map(function(e){return"/*# sourceURL="+r.sourceRoot+e+" */"});return[n].concat(i).concat([o]).join("\n")}return""+n}e.exports=function(n){var a=[];return a.toString=function(){return this.map(function(e){var t=r(e,n);return e[2]?"@media "+e[2]+"{"+t+"}":t}).join("")},a.i=function(e,t){"string"==typeof e&&(e=[[null,e,""]]);for(var n={},r=0;r<this.length;r++){var o=this[r][0];null!=o&&(n[o]=!0)}for(r=0;r<e.length;r++){var i=e[r];null!=i[0]&&n[i[0]]||(t&&!i[2]?i[2]=t:t&&(i[2]="("+i[2]+") and ("+t+")"),a.push(i))}},a}},function(e,t,n){"use strict";n.r(t);var r={props:{isProduction:{type:Boolean,required:!1,default:!1},styleClass:{type:String,default:"payButton"},email:{type:String,required:!0},amount:{type:Number,required:!0},raveKey:{type:String,required:!0},reference:{type:String,required:!0},callback:{type:Function,required:!0,default:function(){}},close:{type:Function,required:!0,default:function(){}},metadata:{type:Object,default:function(){return{}}},currency:{type:String,default:"NGN"},country:{type:String,default:"NG"},customerFirstname:{type:String,default:""},customerLastname:{type:String,default:""},customTitle:{type:String,default:""},customDescription:{type:String,default:""},customLogo:{type:String,default:""},redirectUrl:{type:String,default:""},paymentMethod:{type:String,default:"both"},paymentPlan:{type:String,default:""},hostedPayment:{type:Number,default:0},subaccounts:{type:Object,default:function(){return{}}}},created:function(){var e=document.createElement("script");e.src=this.isProduction?"https://api.ravepay.co/flwv3-pug/getpaidx/api/flwpbf-inline.js":"https://ravesandboxapi.flutterwave.com/flwv3-pug/getpaidx/api/flwpbf-inline.js",document.getElementsByTagName("head")[0].appendChild(e)},methods:{payWithRave:function(){var t=this;window.getpaidSetup({customer_email:this.email,amount:this.amount,txref:this.reference,PBFPubKey:this.raveKey,onclose:function(){return t.close()},callback:function(e){return t.callback(e)},meta:this.metadata,currency:this.currency,country:this.country,customer_firstname:this.customer_firstname,customer_lastname:this.customer_lastname,custom_title:this.custom_title,custom_description:this.custom_description,custom_logo:this.custom_logo,redirect_url:this.redirect_url,payment_plan:this.payment_plan,payment_method:this.payment_method,subaccounts:this.subaccounts,hosted_payment:this.hosted_payment})}}},o=(n(1),function(e,t,n,r,o,i,a,u){var s,c="function"==typeof e?e.options:e;if(t&&(c.render=t,c.staticRenderFns=n,c._compiled=!0),r&&(c.functional=!0),i&&(c._scopeId="data-v-"+i),a?c._ssrRegister=s=function(e){(e=e||this.$vnode&&this.$vnode.ssrContext||this.parent&&this.parent.$vnode&&this.parent.$vnode.ssrContext)||"undefined"==typeof __VUE_SSR_CONTEXT__||(e=__VUE_SSR_CONTEXT__),o&&o.call(this,e),e&&e._registeredComponents&&e._registeredComponents.add(a)}:o&&(s=u?function(){o.call(this,this.$root.$options.shadowRoot)}:o),s)if(c.functional){c._injectStyles=s;var l=c.render;c.render=function(e,t){return s.call(t),l(e,t)}}else{var d=c.beforeCreate;c.beforeCreate=d?[].concat(d,s):[s]}return{exports:e,options:c}}(r,function(){var e=this;return(e._self._c||e.$createElement)("button",{class:"",on:{click:e.payWithRave}},[e._t("default",[e._v("Make Payment")])],2)},[],!1,null,null,null));t.default=o.exports},function(e,t,n){"use strict";function u(e,t){for(var n=[],r={},o=0;o<t.length;o++){var i=t[o],a=i[0],u={id:e+":"+o,css:i[1],media:i[2],sourceMap:i[3]};r[a]?r[a].parts.push(u):n.push(r[a]={id:a,parts:[u]})}return n}function r(i,e,t,n){h=t,v=n||{};var a=u(i,e);return s(a),function(e){for(var t=[],n=0;n<a.length;n++){(r=d[a[n].id]).refs--,t.push(r)}e?s(a=u(i,e)):a=[];for(n=0;n<t.length;n++){var r;if(0===(r=t[n]).refs){for(var o=0;o<r.parts.length;o++)r.parts[o]();delete d[r.id]}}}}function s(e){for(var t=0;t<e.length;t++){var n=e[t],r=d[n.id];if(r){r.refs++;for(var o=0;o<r.parts.length;o++)r.parts[o](n.parts[o]);for(;o<n.parts.length;o++)r.parts.push(a(n.parts[o]));n.parts.length<r.parts.length&&(r.parts.length=n.parts.length)}else{var i=[];for(o=0;o<n.parts.length;o++)i.push(a(n.parts[o]));d[n.id]={id:n.id,refs:1,parts:i}}}}function i(){var e=document.createElement("style");return e.type="text/css",f.appendChild(e),e}function a(t){var n,r,e=document.querySelector("style["+g+'~="'+t.id+'"]');if(e){if(h)return y;e.parentNode.removeChild(e)}if(b){var o=m++;e=p||(p=i()),n=c.bind(null,e,o,!1),r=c.bind(null,e,o,!0)}else e=i(),n=function(e,t){var n=t.css,r=t.media,o=t.sourceMap;r&&e.setAttribute("media",r);v.ssrId&&e.setAttribute(g,t.id);o&&(n+="\n/*# sourceURL="+o.sources[0]+" */",n+="\n/*# sourceMappingURL=data:application/json;base64,"+btoa(unescape(encodeURIComponent(JSON.stringify(o))))+" */");if(e.styleSheet)e.styleSheet.cssText=n;else{for(;e.firstChild;)e.removeChild(e.firstChild);e.appendChild(document.createTextNode(n))}}.bind(null,e),r=function(){e.parentNode.removeChild(e)};return n(t),function(e){if(e){if(e.css===t.css&&e.media===t.media&&e.sourceMap===t.sourceMap)return;n(t=e)}else r()}}function c(e,t,n,r){var o=n?"":r.css;if(e.styleSheet)e.styleSheet.cssText=_(t,o);else{var i=document.createTextNode(o),a=e.childNodes;a[t]&&e.removeChild(a[t]),a.length?e.insertBefore(i,a[t]):e.appendChild(i)}}n.r(t),n.d(t,"default",function(){return r});var o="undefined"!=typeof document;if("undefined"!=typeof DEBUG&&DEBUG&&!o)throw Error("vue-style-loader cannot be used in a non-browser environment. Use { target: 'node' } in your Webpack config to indicate a server-rendering environment.");var l,d={},f=o&&(document.head||document.getElementsByTagName("head")[0]),p=null,m=0,h=!1,y=function(){},v=null,g="data-vue-ssr-id",b="undefined"!=typeof navigator&&/msie [6-9]\b/.test(navigator.userAgent.toLowerCase()),_=(l=[],function(e,t){return l[e]=t,l.filter(Boolean).join("\n")})}])});
 
 /***/ }),
 
@@ -78948,27 +79027,30 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.js");
 /* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(bootstrap__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _theme_plugins_scrollmagic_ScrollMagic_min_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/theme/plugins/scrollmagic/ScrollMagic.min.js */ "./resources/theme/plugins/scrollmagic/ScrollMagic.min.js");
-/* harmony import */ var _theme_plugins_scrollmagic_ScrollMagic_min_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_theme_plugins_scrollmagic_ScrollMagic_min_js__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _theme_plugins_jquery_datepicker_jquery_ui_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/theme/plugins/jquery-datepicker/jquery-ui.js */ "./resources/theme/plugins/jquery-datepicker/jquery-ui.js");
-/* harmony import */ var _theme_plugins_jquery_datepicker_jquery_ui_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_theme_plugins_jquery_datepicker_jquery_ui_js__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _theme_plugins_colorbox_jquery_colorbox_min_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/theme/plugins/colorbox/jquery.colorbox-min.js */ "./resources/theme/plugins/colorbox/jquery.colorbox-min.js");
-/* harmony import */ var _theme_plugins_colorbox_jquery_colorbox_min_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_theme_plugins_colorbox_jquery_colorbox_min_js__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _js_components_ValidationErrors__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/js/components/ValidationErrors */ "./resources/js/components/ValidationErrors.vue");
-/* harmony import */ var _theme_js_custom_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/theme/js/custom.js */ "./resources/theme/js/custom.js");
-/* harmony import */ var _theme_js_custom_js__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_theme_js_custom_js__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var vue_toastr__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vue-toastr */ "./node_modules/vue-toastr/dist/vue-toastr.js");
-/* harmony import */ var vue_toastr__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(vue_toastr__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _sass_app_scss__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/sass/app.scss */ "./resources/sass/app.scss");
-/* harmony import */ var _sass_app_scss__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_sass_app_scss__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _js_routes_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/js/routes.js */ "./resources/js/routes.js");
-/* harmony import */ var _js_views_App__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/js/views/App */ "./resources/js/views/App.vue");
+/* harmony import */ var vue_ravepayment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-ravepayment */ "./node_modules/vue-ravepayment/dist/rave.min.js");
+/* harmony import */ var vue_ravepayment__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_ravepayment__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _theme_plugins_scrollmagic_ScrollMagic_min_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/theme/plugins/scrollmagic/ScrollMagic.min.js */ "./resources/theme/plugins/scrollmagic/ScrollMagic.min.js");
+/* harmony import */ var _theme_plugins_scrollmagic_ScrollMagic_min_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_theme_plugins_scrollmagic_ScrollMagic_min_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _theme_plugins_jquery_datepicker_jquery_ui_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/theme/plugins/jquery-datepicker/jquery-ui.js */ "./resources/theme/plugins/jquery-datepicker/jquery-ui.js");
+/* harmony import */ var _theme_plugins_jquery_datepicker_jquery_ui_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_theme_plugins_jquery_datepicker_jquery_ui_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _theme_plugins_colorbox_jquery_colorbox_min_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/theme/plugins/colorbox/jquery.colorbox-min.js */ "./resources/theme/plugins/colorbox/jquery.colorbox-min.js");
+/* harmony import */ var _theme_plugins_colorbox_jquery_colorbox_min_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_theme_plugins_colorbox_jquery_colorbox_min_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _js_components_ValidationErrors__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/js/components/ValidationErrors */ "./resources/js/components/ValidationErrors.vue");
+/* harmony import */ var _theme_js_custom_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/theme/js/custom.js */ "./resources/theme/js/custom.js");
+/* harmony import */ var _theme_js_custom_js__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_theme_js_custom_js__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var vue_toastr__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vue-toastr */ "./node_modules/vue-toastr/dist/vue-toastr.js");
+/* harmony import */ var vue_toastr__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(vue_toastr__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _sass_app_scss__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/sass/app.scss */ "./resources/sass/app.scss");
+/* harmony import */ var _sass_app_scss__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_sass_app_scss__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _js_routes_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/js/routes.js */ "./resources/js/routes.js");
+/* harmony import */ var _js_views_App__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @/js/views/App */ "./resources/js/views/App.vue");
 /**
  * First, we will load all of this project's Javascript utilities and other
  * dependencies. Then, we will be ready to develop a robust and powerful
  * application frontend using useful Laravel and JavaScript libraries.
  */
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+
 
 
 
@@ -78985,15 +79067,16 @@ global.$ = global.jQuery = __webpack_require__(/*! jquery */ "./node_modules/jqu
  //components file
 
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_toastr__WEBPACK_IMPORTED_MODULE_7___default.a, {
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_toastr__WEBPACK_IMPORTED_MODULE_8___default.a, {
   /* options */
 });
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("ValidationErrors", _js_components_ValidationErrors__WEBPACK_IMPORTED_MODULE_5__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("ValidationErrors", _js_components_ValidationErrors__WEBPACK_IMPORTED_MODULE_6__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("Rave", vue_ravepayment__WEBPACK_IMPORTED_MODULE_2___default.a);
 var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: '#app',
-  router: _js_routes_js__WEBPACK_IMPORTED_MODULE_9__["default"],
+  router: _js_routes_js__WEBPACK_IMPORTED_MODULE_10__["default"],
   render: function render(s) {
-    return s(_js_views_App__WEBPACK_IMPORTED_MODULE_10__["default"]);
+    return s(_js_views_App__WEBPACK_IMPORTED_MODULE_11__["default"]);
   }
 });
 /* harmony default export */ __webpack_exports__["default"] = (app);

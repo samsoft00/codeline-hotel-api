@@ -60,8 +60,20 @@
                                 <td>{{ this.search.search.total }}</td>
                                 </tr>
                             </table>
-                            <div class="book_now_button">
-                                <a @click="bookRoomNow()" href="javacript:;" tag="a">Book Now</a>
+                            <Rave
+                                :is-production="false"
+                                style-class="paymentbtn"
+                                :email="user.email || 'oyewoleabayomi@gmail.com'"
+                                :amount="paymentData.total_price"
+                                :reference="reference"
+                                :rave-key="raveKey"
+                                :callback="paymentCallback"
+                                :close="close"
+                                currency="NGN"
+                                ><i>Book Now</i>
+                            </Rave>                             
+                            <div class="book_now_button">                         
+                                <!-- <a @click="bookRoomNow()" href="javacript:;" tag="a">Book Now</a> -->
                             </div>
                         </div> 
                     </div>
@@ -90,8 +102,22 @@
                         image: ''
                     }
                 },
-                search:{}
+                search:{},
+                user:{},
+                paymentData:{},
+                raveKey: process.env.MIX_FLW_TEST_KEY
             }
+        },
+        computed:{
+            reference(){
+                let text = "";
+                let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        
+                for( let i=0; i < 10; i++ )
+                text += possible.charAt(Math.floor(Math.random() * possible.length));
+        
+                return text;
+            }            
         },
         methods: {
             fetchRoomById(){
@@ -112,22 +138,40 @@
             fetchSearchInfo(){
                 this.search = JSON.parse(window.localStorage.getItem('search'));
             },
-            bookRoomNow(){
-              const user = JSON.parse(window.localStorage.getItem('user'));
-              const search = JSON.parse(window.localStorage.getItem('search'));
+            close(){
+                console.log('Close App');
+            },
+            paymentCallback(response){
+              const search = JSON.parse(window.localStorage.getItem('search'));             
               
-              console.log(search);
-              if(user && user.access_token){
+              if(this.user && this.user.access_token){
+                  
+                  if(response.data.success !== true){
+                      this.$toastr.e("Unable to process payment, check and try again!");
+                      return;
+                  }
+
+                let { tx } = response.data;
                 let data = {
                     end_date:search.date_end,
                     start_date: search.date_start,
                     room_id: search.room_id,
                     total_price: parseFloat( search.search.total.slice(1) ),
-                    total_night: parseInt( search.search.days )
+                    total_night: parseInt( search.search.days ),
+                    
+                    tx_id: tx.id,
+                    amount: tx.amount,
+                    order_ref: tx.orderRef,
+                    payment_id: tx.paymentId,
+                    charged_amount: tx.charged_amount,
+                    tx_ref: tx.txRef,
+                    status: tx.status,
+                    payment_type : tx.paymentType                   
                 }
                 axios.post('/api/book-room', data)
                      .then(response => {
                         this.$toastr.e("")
+                        console.log(`booking ${response}`);
                        //clear storage
                         window.localStorage.removeItem('search');
                        this.$router.push({ name: 'booking', params: { bookId: response.data.id }});
@@ -145,12 +189,26 @@
         },
         created(){
             this.fetchSearchInfo();
+            this.user = JSON.parse(window.localStorage.getItem('user'));
+            this.paymentData = {
+                end_date: this.search.date_end,
+                start_date: this.search.date_start,
+                room_id: this.search.room_id,
+                total_price: parseFloat( this.search.search.total.slice(1) ),
+                total_night: parseInt( this.search.search.days )
+            }            
         }
     }
 </script>
 
 <style lang="scss" scoped>
-  table th, .table td {
-      padding: 0.3rem;
-  }
+    table th, .table td {
+        padding: 0.3rem;
+    }
+    .paymentbtn{
+        color: #04193d;
+        width: 250px;
+        height: 50px;
+        font-weight: 800;
+    }  
 </style>

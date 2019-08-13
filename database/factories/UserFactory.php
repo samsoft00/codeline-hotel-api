@@ -10,6 +10,7 @@ use App\Customer;
 use App\RoomType;
 use Carbon\Carbon;
 use App\RoomCapacity;
+use App\Transaction;
 use Illuminate\Support\Str;
 use Faker\Generator as Faker;
 
@@ -136,9 +137,23 @@ $factory->define(Room::class, function(Faker $faker){
     ];
 });
 
+$factory->define(Transaction::class, function(Faker $faker){
+    return [
+        'tx_id'         =>  Str::random(15),
+        'order_ref'     =>  Str::random(20),
+        'payment_id'    =>  Str::random(10),
+        'amount'        =>  2000, 
+        'charged_amount'=>  2000, 
+        'tx_ref'        =>  Str::random(20),
+        'status'        =>  true,
+        'payment_type'  =>  'card' 
+    ];
+});
+
 $factory->define(Booking::class, function(Faker $faker){
     $room = Room::with(['type'])->inRandomOrder()->first();
     $customer = Customer::inRandomOrder()->first();
+    $transaction = Transaction::inRandomOrder()->first();
 
     $start_date = Carbon::now()->subWeek(array_rand([2, 5, 1, 7, 3], 1));
     $end_date = Carbon::now()->addWeek(array_rand([2, 5, 1, 7, 3], 1));
@@ -153,6 +168,7 @@ $factory->define(Booking::class, function(Faker $faker){
         'date_end'      =>  $end_date,
         'total_night'   =>  $diff,
         'total_price'   =>  $total_price,
-        'customer_id'   =>  $customer->id
+        'customer_id'   =>  $customer->id,
+        'transaction_id' =>  $transaction->id
     ];
 });

@@ -8,6 +8,7 @@ require('./bootstrap');
 
 import Vue from 'vue';
 import bootstrap from 'bootstrap';
+import VueRavePayment from 'vue-ravepayment';
 global.$ = global.jQuery = require('jquery');
 
 //import theme
@@ -28,11 +29,12 @@ import App from '@/js/views/App';
 
 Vue.use(Toastr, { /* options */ });
 Vue.component("ValidationErrors", ValidationError);
+Vue.component("Rave", VueRavePayment);
 
 const app = new Vue({
     el: '#app',
     router: Routes,
-    render: s => s(App)
+    render: s => s(App)   
 });
 
 export default app;
