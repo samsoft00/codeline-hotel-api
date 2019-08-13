@@ -1,4 +1,6 @@
 {
+    "author": "Oyewole Abayomi Samuel <oyewoleabayomi@gmail.com>",
+    "license": "MIT",
     "private": true,
     "scripts": {
         "dev": "npm run development",

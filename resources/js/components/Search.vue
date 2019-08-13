@@ -65,7 +65,9 @@
     export default {
         data(){
             return {
-                rooms: [],
+                rooms: [{
+                  type: {  cost: {price: ''} }
+                }],
                 search: {}
             }
         },

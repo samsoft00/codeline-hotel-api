@@ -86,7 +86,8 @@
                         id:'',
                         cost:{price: ''}},
                     hotel: {
-                        name: ''
+                        name: '',
+                        image: ''
                     }
                 },
                 search:{}
@@ -96,7 +97,7 @@
             fetchRoomById(){
                 let id = this.$route.params.roomId;
                 
-                axios.get(`/api/room/${id}`)
+                axios.get(`/api/rooms/${id}`)
                     .then(response => this.room = response.data)
                     .catch(error => console.log(error));
             },
